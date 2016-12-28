@@ -1,0 +1,116 @@
+/*--------------------------------------------------------------
+Options Icons
+--------------------------------------------------------------*/
+
+/** The following option icon CSS is programatically generated at the top of tvr-microthemer-ui.php
+ After refreshing the ui, phpStorm then needs to update styles.css
+ **/
+// code
+.option-icon-css { @include state-sprite(15.2,  1); }
+// font
+.option-icon-font_family { @include state-sprite(33.4,  14); }
+.option-icon-google_font { @include state-sprite(30.4, 11); }
+.option-icon-color { @include state-sprite(26.4, 11); }
+.option-icon-font_size { @include state-sprite(21.4, 11); }
+.option-icon-line_height { @include state-sprite(22.4, 11); }
+.option-icon-font_weight { @include state-sprite(27.4, 11); }
+.option-icon-font_style { @include state-sprite(28.4, 11); }
+.option-icon-text_decoration { @include state-sprite(31.4, 11); }
+.option-icon-font_variant { @include state-sprite(29.25, 11); }
+// text
+.option-icon-text_align { @include state-sprite(38.4,  14); }
+.option-icon-text_indent { @include state-sprite(23.25,  4); }
+.option-icon-text_transform { @include state-sprite(32.4, 11); }
+.option-icon-word_spacing { @include state-sprite(22.15,  4); }
+.option-icon-letter_spacing { @include state-sprite(24.4, 11); }
+.option-icon-word_wrap { @include state-sprite(41.4,  14); }
+.option-icon-white_space { @include state-sprite(43.4,  14); }
+.option-icon-direction { @include state-sprite(42.4,  14); }
+.option-icon-vertical_align { @include state-sprite(31.4,  14); }
+// list
+.option-icon-list_style_type { @include state-sprite(23.4, 11); }
+.option-icon-list_style_image { @include state-sprite(28.2,  14); }
+.option-icon-list_style_position { @include state-sprite(27.25,  14); }
+// shadow
+.option-icon-text_shadow_x { @include state-sprite(39.4, 11); }
+.option-icon-text_shadow_y { @include state-sprite(40.4, 11); }
+.option-icon-text_shadow_blur { @include state-sprite(42.4, 11); }
+.option-icon-text_shadow_color { @include state-sprite(41.25, 11); }
+.option-icon-box_shadow_x { @include state-sprite(34.25, 11); }
+.option-icon-box_shadow_y { @include state-sprite(35.2, 11); }
+.option-icon-box_shadow_blur { @include state-sprite(37.25, 11); }
+.option-icon-box_shadow_spread { @include state-sprite(31.4, 4); }
+.option-icon-box_shadow_color { @include state-sprite(36.15, 11); }
+.option-icon-box_shadow_inset { @include state-sprite(30.4,  4); }
+// background
+.option-icon-background_color { @include state-sprite(25.4, 11); }
+.option-icon-background_image { @include state-sprite(39.4,  14); }
+.option-icon-background_position { @include state-sprite(3.4,  14); }
+.option-icon-background_repeat { @include state-sprite(1.4,  14); }
+.option-icon-background_attachment { @include state-sprite(2.4,  14); }
+.option-icon-background_size { @include state-sprite(25.4,  14); }
+.option-icon-background_clip { @include state-sprite(26.4,  14); }
+// dimensions
+.option-icon-width { @include state-sprite(9.4, 11); }
+.option-icon-min_width { @include state-sprite(36.4,  14); }
+.option-icon-max_width { @include state-sprite(34.4,  14); }
+.option-icon-height { @include state-sprite(10.4, 11); }
+.option-icon-min_height { @include state-sprite(37.25,  14); }
+.option-icon-max_height { @include state-sprite(35.25,  14); }
+.option-icon-box_sizing { @include state-sprite(32.4,  14); }
+// padding_margin
+.option-icon-padding_top { @include state-sprite(3.4, 11); }
+.option-icon-padding_right { @include state-sprite(2.4, 11); }
+.option-icon-padding_bottom { @include state-sprite(4.4, 11); }
+.option-icon-padding_left { @include state-sprite(1.4, 11); }
+.option-icon-margin_top { @include state-sprite(7.4, 11); }
+.option-icon-margin_right { @include state-sprite(6.25, 11); }
+.option-icon-margin_bottom { @include state-sprite(8.4, 11); }
+.option-icon-margin_left { @include state-sprite(5.2, 11); }
+// border
+.option-icon-border_top_color { @include state-sprite(10.4,  14); }
+.option-icon-border_right_color { @include state-sprite(13.4,  14); }
+.option-icon-border_bottom_color { @include state-sprite(11.4,  14); }
+.option-icon-border_left_color { @include state-sprite(12.4,  14); }
+.option-icon-border_top_width { @include state-sprite(6.4,  14); }
+.option-icon-border_right_width { @include state-sprite(9.4,  14); }
+.option-icon-border_bottom_width { @include state-sprite(7.4,  14); }
+.option-icon-border_left_width { @include state-sprite(8.4,  14); }
+.option-icon-border_top_style { @include state-sprite(14.4,  14); }
+.option-icon-border_right_style { @include state-sprite(17.4,  14); }
+.option-icon-border_bottom_style { @include state-sprite(15.4,  14); }
+.option-icon-border_left_style { @include state-sprite(16.4,  14); }
+.option-icon-border_top_left_radius { @include state-sprite(17.4, 11); }
+.option-icon-border_top_right_radius { @include state-sprite(18.4, 11); }
+.option-icon-border_bottom_right_radius { @include state-sprite(20.4, 11); }
+.option-icon-border_bottom_left_radius { @include state-sprite(19.4, 11); }
+// behaviour
+.option-icon-display { @include state-sprite(23.4,  14); }
+.option-icon-overflow { @include state-sprite(20.25,  14); }
+.option-icon-overflow_x { @include state-sprite(29.25,  14); }
+.option-icon-overflow_y { @include state-sprite(30.15,  14); }
+.option-icon-visibility { @include state-sprite(24.25,  14); }
+.option-icon-cursor { @include state-sprite(22.4,  14); }
+.option-icon-opacity { @include state-sprite(4.25,  14); }
+// position
+.option-icon-position { @include state-sprite(40.4,  14); }
+.option-icon-top { @include state-sprite(11.4, 11); }
+.option-icon-bottom { @include state-sprite(12.4, 11); }
+.option-icon-left { @include state-sprite(13.25, 11); }
+.option-icon-right { @include state-sprite(14.4, 11); }
+.option-icon-z_index { @include state-sprite(21.4,  14); }
+.option-icon-float { @include state-sprite(18.25,  14); }
+.option-icon-clear { @include state-sprite(19.25,  14); }
+// gradient
+.option-icon-gradient_angle { @include state-sprite(28.25,  1); }
+.option-icon-gradient_a { @include state-sprite(25.4, 11); }
+.option-icon-gradient_b { @include state-sprite(25.4, 11); }
+.option-icon-gradient_b_pos { @include state-sprite(40.25,  14); }
+.option-icon-gradient_c { @include state-sprite(25.4, 11); }
+
+// width/margin adjustments
+.option-icon { .icon-size-0b & { margin-left:-6px; } }
+.option-icon { .icon-size-0a & { margin-left:-4px; } }
+.option-icon { .icon-size-2 & { width:30px !important; } }
+.option-icon { .icon-size-3 & { width:32px !important; } }
+.option-icon { .icon-size-4 & { width:36px !important; } }

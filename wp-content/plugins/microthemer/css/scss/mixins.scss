@@ -1,0 +1,149 @@
+/*--------------------------------------------------------------
+Mixins - see also css3 mixins import above
+--------------------------------------------------------------*/
+// sprite
+@mixin sprite($left, $top) {
+  background-image:$sprite;
+  background-repeat: no-repeat;
+  background-position: ($left*-40)+40+px ($top*-40)+40+px;
+  background-size: $background_size;
+}
+// sprite for icons with 3 states
+@mixin state-sprite($left, $top) {
+  background-image:$sprite;
+  background-repeat: no-repeat;
+  background-position: ($left*-40)+40+px ($top*-40)+40+px;
+  &:hover:not(.no-click),
+  &.on {
+	background-position: ($left*-40)+40+px (($top+1)*-40)+40+px;
+  }
+  &.active {
+	background-position: ($left*-40)+40+px (($top+2)*-40)+40+px;
+  }
+  background-size: $background_size;
+}
+
+/* exception for pg-icon which uses 'on' a bit differently - when html has loaded (blue bg only when values exist for pg group).
+- I FOUND THIS NEW SYSTEM CONFUSING WHICH PG I WAS ON, CAN COME BACK TO THIS BUT NEEDS TO BE MORE SUBTLE
+@mixin state-sprite-pg($left, $top) {
+  background-image:$sprite;
+  background-repeat: no-repeat;
+  background-position: ($left*-40)+40+px ($top*-40)+40+px;
+  &.hasValues {
+	//background-position: ($left*-40)+40+px (($top+23)*-40)+40+px;
+	background-position: ($left*-40)+40+px (($top+1)*-40)+40+px;
+	background-color: $lightBlue;
+	opacity:.6;
+  }
+  &:hover:not(.h-i) {
+	background-position: ($left*-40)+40+px (($top+2)*-40)+40+px;
+	background-color: $lightBlue;
+	opacity:1;
+	&.hasValues {
+	  background-position: ($left*-40)+40+px (($top+1)*-40)+40+px;
+	}
+  }
+  &.active {
+	background-position: ($left*-40)+40+px (($top+2)*-40)+40+px;
+	background-color: $green;
+	opacity:1;
+	&.hasValues {
+	  background-position: ($left*-40)+40+px (($top+1)*-40)+40+px;
+	}
+  }
+  background-size: $background_size;
+}
+*/
+
+
+// exception for pg-icon which uses 'on' a bit differently - when html has loaded (blue bg only when values exist for pg group).
+@mixin state-sprite-pg($left, $top) {
+  background-image:$sprite;
+  background-repeat: no-repeat;
+  background-position: ($left*-40)+40+px ($top*-40)+40+px;
+  &.hasValues {
+	background-position: ($left*-40)+40+px (($top+23)*-40)+40+px;
+  }
+  &:hover:not(.no-click),
+  &.active {
+	background-position: ($left*-40)+40+px (($top+2)*-40)+40+px;
+	background-color: $green;
+	&.hasValues {
+	  background-position: ($left*-40)+40+px (($top+1)*-40)+40+px;
+	}
+  }
+  &:hover:not(.no-click) {
+	background-color: $lightBlue;
+  }
+  background-size: $background_size;
+}
+
+// line up the option icons properly
+// NOTE: WE could be more anal with adding adjustment classes to icons, and more adjustment classes.
+// The in-program CSS reference is useful for checking consistent lining up of icons.
+@mixin line-up-prop-icons(){
+  .option-icon {
+	margin:0 8px;
+  }
+  .icon-size-0b .option-icon { margin-left:8px; }
+  .icon-size-0a .option-icon { margin-left:8px; }
+  .icon-size-2 .option-icon {  margin:0 5px; }
+  .icon-size-3 .option-icon {  margin:0 4px; }
+  .icon-size-4 .option-icon {  margin:0 2px; }
+  // get color wheels to line up properly
+  .option-icon-background_color,
+  .option-icon-gradient_a,
+  .option-icon-gradient_b,
+  .option-icon-gradient_c {
+	margin:0 4px 0 12px;
+  }
+}
+
+// show disabled by user
+@mixin show-disabled(){
+  //color:$darkOrange;
+  color:$washedOut;
+  text-decoration: line-through;
+}
+
+// grey shadow
+@mixin grey-shadow() {
+  @include box-shadow(0, 0, 6px, $alphaShadow);
+}
+
+// grey shadow
+@mixin grey-shadow-bottom() {
+  @include box-shadow(0, 3px, 6px, $alphaShadow);
+}
+
+// dialog shadow
+@mixin dialog-shadow() {
+  @include box-shadow(0, 0, 6px, $alphaShadow);
+
+}
+
+// fade in options for pg and input fields
+@mixin hover-fade-in($hidden:'.quick-opts', $duration:.15s, $delay:.5s, $pos: false, $posVal: 100%){
+  #{$hidden} {
+	visibility: hidden;
+	opacity:0;
+	@if ($pos) { #{$pos}:300%; } // so animation process doesn't begin on quick mouseover
+  }
+  &:hover {
+	#{$hidden} {
+	  opacity:1;
+	  visibility: visible;
+	  @if ($pos) { #{$pos}:$posVal; }
+	  @include transition_flexible(opacity $duration ease $delay, $pos 0s ease $delay);
+	}
+  }
+}
+
+// pause animation
+@mixin pause(){
+  -ms-animation-play-state:paused;
+  -o-animation-play-state:paused;
+  -moz-animation-play-state:paused;
+  -webkit-animation-play-state:paused;
+  animation-play-state: paused;
+}

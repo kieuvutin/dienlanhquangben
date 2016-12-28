@@ -1,0 +1,65 @@
+/*--------------------------------------------------------------
+Variables
+--------------------------------------------------------------*/
+// try having the MT on the right
+$mt_space: 40px;
+
+//set up colour scheme
+$white: #fff;
+$nearlyWhite: #fbfbfb;
+$rulerGrooves: rgba(230, 230, 230, .3);
+$rulerNumbers: rgba(230, 230, 230, .6);
+// non-opacity
+$rulerGrooves: #6e7582;
+$rulerNumbers: #9ba5ac;
+
+//$red: #dd3d36;
+$black: #000;
+$red: #f0636d;
+$darkRed: #c64f63;
+$orange: #FFBA42;
+$darkOrange: #9a732a; //d98b02;
+$mediumOrange: #c68e25;
+$lightOrange:rgba(255, 186, 66, 0.5);
+$lightGreen: #94d3af;
+$green: #77a38c;
+$darkEditor: #161616;
+$darkGreen: #6f937f;
+$darkBlue:#18202a;
+$darkBlueAlpha: rgba(24, 32, 42, 0.9);
+$washedOut:rgba(24, 32, 42, .6);
+$mediumBlue: #2f3846;
+$mediumBlueAlpha: rgba(47, 56, 70, .7);
+$lightBlue: #3b4658;
+$lightBlueAlpha:rgba(59, 70, 88, 0.9);
+$lighterBlue: #768293;
+
+// wordpress link color
+$wp_link: #0074a2;
+$wp_link_hover: #2ea2cc;
+$wp_link_focus: #124964;
+
+$alphaShadow: rgba(0, 0, 0, 0.2);
+$shadowColor:#999998;
+$mediumGreyb: #bfbfbf;
+$mediumGrey: #cbcbcb;
+$lightGrey: #e6e6e6;
+$lightestGrey: #f6f6f6;
+$lightestGreyOpacity: rgba(246, 246, 246, .5);
+
+$sliderAtRest: #d4d4d4;
+$sliderActive: #cfcfcf;
+
+$appFont: 'Open Sans', sans-serif;
+$codeFont: $appFont;
+$codeFont2: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+
+// semantically describe key layout breakpoints
+$style_groups_drop: max-width 600px;
+$options_split: max-width 600px;
+$options_split_again: max-width 400px;
+
+// other variables
+$sprite: url('../images/MT_sprite.png?v=44');
+$largeLoadingGif: url('../images/logo-loader-30.gif?v=1') no-repeat center center;
+$background_size: 1920px 1120px; // half the actual size so high res screens render well.

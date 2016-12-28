@@ -1,0 +1,5003 @@
+/*--------------------------------------------------------------
+Set up scss environment
+--------------------------------------------------------------*/
+@import "scss/susy";
+@import "scss/breakpoint";
+@import "scss/css3-mixins";
+@import "scss/scroll.scss";
+
+// my stuff
+@import "scss/functions";
+@import "scss/variables";
+@import "scss/mixins";
+
+// option-icons.scss is generated via PHP
+.o-icon-wrap {
+  overflow: hidden;
+  display: inline-block;
+
+}
+.option-icon {
+  width:24px !important;
+  height:40px !important;
+}
+@import "scss/option-icons";
+
+// exception for content as we dont have an icon for it
+.field-behaviour-content {
+  .o-icon-wrap {
+	display: none !important;
+
+  }
+}
+
+/*--------------------------------------------------------------
+Global styles affecting all UI pages
+--------------------------------------------------------------*/
+
+// chrome double-click selection is a bit annoying on some elements: JS fix: http://stackoverflow.com/questions/4117466/javascript-disable-text-selection-via-doubleclick
+body.tvr-visual { // refine to only sels that need it - also add to frontend
+	.scroll-buttons,
+	#toggle-highlighting,
+	.tvr-icon {
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-webkit-user-select: none;
+		-o-user-select: none;
+		user-select: none;
+	}
+}
+
+body .ui-tooltip {
+	z-index: 999915 !important;
+	@include box-shadow(0, 0, 0, $alphaShadow);
+	@include border-radius(3px);
+	background: $mediumBlue;
+	color:$white;
+	font-size: 12px;
+	line-height: 1.5;
+	font-family: $appFont;
+	border:0;
+	padding:4px 8px 4px 8px;
+	cursor: pointer;
+	a {
+		color:$lightestGrey;
+	}
+	//&::after,
+	.tp-pointer {
+		@include border-radius(2px);
+		z-index: -1 !important;
+		position: fixed;
+		width: 1em;
+		height: 1em;
+		background:$mediumBlue no-repeat center center;
+		-webkit-transform: rotate(45deg);
+		-moz-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+}
+// span that holds HTML for tooltip
+.tp-html {
+	display: none;
+}
+
+#loading-gif-template {
+  display: none;
+}
+
+.tvr-clearfix {
+	@include susy-clearfix();
+}
+.clear {
+	clear:both;
+}
+
+body.tvr-visual {
+	position: fixed; /* position:fixed; needed to fix color picker bug */
+	overflow:hidden;
+	width:100%;
+	margin:0 !important;
+	top:0 !important;
+}
+
+/* hide left sidebar on pages that don't need it */
+.toplevel_page_tvr-microthemer,
+.admin_page_tvr-manage-micro-themes,
+.admin_page_tvr-manage-single,
+.admin_page_tvr-docs
+
+{
+	#wpadminbar,
+	#adminmenuback,
+	#adminmenuwrap,
+	.update-nag,
+	div.updated,
+	#wpfooter {
+		display:none;
+	}
+	#wpcontent {
+		margin-left: 0;
+		padding-left: 0;
+	}
+}
+
+#wpwrap {
+	background: $lightestGrey;
+}
+a {
+  &:focus {
+	box-shadow: none;
+  }
+}
+a.no-line {
+	text-decoration: none;
+}
+// I failed to set a min-width on this, maybe later...
+#cboxContent {
+	#cboxLoadedContent {
+		img {
+
+		}
+	}
+}
+
+.trial-disabled {
+	opacity: 0.5; //- this interferes with the main menu for some reason
+}
+.tvr-help {
+  cursor:help;
+}
+
+.tvr-color-bg {
+  background-image: url(../images/trans.png);
+}
+
+.important-toggle {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: $lightGrey;
+  font-weight: bold;
+  &.active {
+	color: $red;
+  }
+}
+.colored-box {
+  width:10px;
+  height:10px;
+  margin:0 6px 0 0;
+  vertical-align: middle;
+  border:1px solid $mediumGrey;
+}
+.colored-box,
+.colored-val {
+  display: inline-block !important;
+  //display: inline-block;
+  //float: left !important;
+}
+
+.tvr-pause {
+  @include pause;
+}
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}
+
+/**
+Quick hover options for responsive tabs and property subgroups
+**/
+.quick-opts-wrap {
+  position: relative;
+  &.item-disabled {
+	@include show-disabled();
+  }
+  &.tvr-fade-in {
+	@include hover-fade-in();
+  }
+
+  .quick-opts {
+	white-space: nowrap;
+	position: absolute;
+	z-index: +1;
+	left:0;
+	box-sizing: border-box;
+	cursor:default;
+	min-width:50px;
+	.quick-opts-inner {
+	  margin:0 auto;
+	  overflow: hidden;
+	  padding:5px;
+	  @include border-radius(3px);
+	  @include grey-shadow();
+	  border:1px solid $mediumGreyb;
+	  background: $lightestGrey;
+	}
+	span.tvr-icon {
+	  float: left;
+	  height:17px !important;
+	  width:17px !important;
+	  margin-right:4px;
+	  &:last-child {
+		margin-right:0;
+	  }
+	}
+	&.tvr-dots {
+	  position: absolute;
+	  left:50%;
+	  width:24px;
+	  margin-left:-12px;
+	  min-width: 0;
+	  .quick-opts-inner {
+		display: none;
+	  }
+	  &:hover {
+		.quick-opts-inner {
+		  display: block;
+		  position: absolute;
+		  bottom:100%;
+		  left:50%;
+		}
+	  }
+	}
+	&.dots-above {
+	  padding-bottom:8px;
+	  background: url(../images/more-opts.png) center 3px no-repeat;
+	  background-size:11px 3px;
+	}
+  }
+}
+
+
+#tvr {
+	margin:0;
+	#visual-view, p, li, input, select, code {
+		font-size:12px;
+		line-height: 1.5; /* 18px */
+		font-family: $appFont;
+		color:$darkBlue;
+	}
+	code {
+		font-family: $codeFont !important;
+		font-style:normal;
+		font-size:11px;
+		background: none;
+		padding:0;
+		color:$lightBlue;
+	}
+	.heading {
+		text-transform: uppercase;
+		font-weight: bold;
+		margin-bottom: 1em;
+	}
+	input[type="text"],
+	select,
+	textarea,
+	.tvr-button {
+		font-weight: bold;
+		margin:0;
+		padding:3px 6px;
+		border:1px solid $lightGrey;
+		line-height: 1.5;
+		box-shadow:none;
+		background:$white;
+		width: auto;
+		height:26px;
+		display: inline-block;
+
+		&.text-label {
+			font-style:italic;
+		}
+		@include border-radius(3px);
+		@include box-sizing(border-box);
+	}
+	input[type="file"] {
+		font-weight: bold;
+		cursor: pointer;
+		margin:0;
+		padding:0
+	}
+	input.text-label {
+		color:$shadowColor;
+	}
+	input.combobox {
+		float:left;
+		&.has-arrows {
+			@include border-radius-separate(3px, 0, 0, 3px);
+		}
+		&.adjusted-corner-radius.has-arrows {
+			@include border-radius-separate(3px, 0, 0, 0);
+		}
+	}
+	.combo-arrow {
+		display: inline-block;
+		cursor: pointer;
+		@include box-sizing();
+		height:26px;
+		width:26px;
+		@include sprite(5.2, 7.2);
+		background-color:$lightestGrey;
+		border: 1px solid $lightGrey;
+		@include border-radius-separate(0, 3px, 3px, 0);
+		float:left;
+		border-left:0;
+		&.on {
+			@include sprite(6.2, 7.2);
+		}
+	}
+
+	.ui-autocomplete.ui-menu {
+		background:$white;
+		@include border-radius-separate(0, 0, 3px, 3px);
+	  	@include grey-shadow();
+		border-color:$mediumGrey;
+		border-top:0;
+		max-height:400px;
+		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
+		z-index: 999913 !important; // needs to be more than mix comp table
+		padding:0;
+		margin:0;
+		li {
+			overflow:hidden; // needed for chrome/safari fix
+		}
+		// WP 4.1 uses new jquery ui with different element rendering li with no child a, or span instead of a etc
+		li.empty,
+		a {
+			overflow: visible;
+			font-family: $appFont;
+			color:$lighterBlue;
+			height: 22px;
+			// needed for chrome/safari fix
+			padding: 2px 4px;
+			box-sizing: border-box;
+			cursor: pointer;
+		}
+		a {
+			// needed for chrome/safari fix
+			float: left;
+			width:100%;
+		}
+		.ui-state-focus {
+			margin:0;
+			border:0;
+			background: $lightestGrey;
+			color:#000 !important;
+			@include border-radius(0);
+			//font-weight:bold;
+		}
+	}
+	input[type="checkbox"],
+	input[type="radio"]{
+		display:none !important;
+		&:checked {
+			display:none !important;
+		}
+	}
+	.fake-checkbox,
+	.fake-radio {
+		float:left;
+		margin-right: 8px;
+		width:14px;
+		height:14px;
+		cursor: pointer;
+		@include sprite(26.325, 2.325);
+		&.on {
+			@include sprite(26.325, 1.325);
+		}
+	}
+	.fake-radio {
+		@include sprite(25.325, 2.325);
+		&.on {
+			@include sprite(25.325, 1.325);
+		}
+	}
+	.ef-label {
+		line-height: 1;
+		float:left;
+	}
+
+	textarea {
+		font-family: $codeFont;
+		font-size:12px;
+		line-height: 1.5;
+		font-weight: normal;
+	}
+	.float-form {
+		clear:both;
+		padding:1em;
+		@include susy-clearfix;
+		p {
+			clear:left;
+			margin-bottom:.5em;
+		}
+		label {
+			display: block;
+			float: left;
+			padding: 6px 0;
+			width: 28%;
+			margin-right:5%;
+		}
+		input, textarea, select {
+			width:67%;
+		}
+		textarea {
+			min-height:75px;
+		}
+		span.tvr-button,
+		.cancel {
+			float:right;
+			margin-left:5px;
+		}
+	}
+	.ajax-loader {
+		&.small {
+			max-width:16px;
+		}
+	}
+	#a-loaders {
+		img {
+			display: none;
+		}
+	}
+
+	.tvr-button {
+		color:$white;
+		font-weight:bold;
+		text-transform: uppercase;
+		cursor:pointer;
+		background: $green;
+		border-color:$lightGrey;
+		text-decoration: none;
+		&:hover {
+			background: $darkGreen;
+		}
+		&.red-button {
+			background: $red;
+			&:hover {
+				background: $darkRed;
+			}
+		}
+	}
+	table {
+		border-spacing: 0;
+		margin: 0 0 1em 0;
+		width: 100%;
+		background:$white;
+		border-bottom: 1px solid $lightestGrey;
+		a {
+			text-decoration: none;
+		}
+		thead th {
+			border-bottom: 1px solid $lightestGrey;
+			font-weight: bold;
+			text-transform: uppercase;
+			padding: 8px 10px;
+		}
+		tfoot th {
+			border-bottom: 0 none;
+			border-top: 1px solid $lightestGrey;
+		}
+		td {
+			vertical-align: top;
+			padding: 4px 10px;
+		}
+		th {
+			text-align: left;
+		}
+	}
+
+
+	.tvr-icon {
+		display:inline-block;
+		width:18px;
+		height:18px;
+		cursor: pointer;
+	}
+  	.option-icon {
+	  cursor:help;
+	}
+	.menu-arrow {
+		@include sprite(5.4, 4.18);
+		&:hover {
+			@include sprite(5.4, 5.18);
+		}
+		&.on {
+			@include sprite(6.35, 4.18);
+			&:hover {
+				@include sprite(6.35, 5.18);
+			}
+		}
+	}
+	.folder-icon {
+		@include sprite(1.3, 4.28);
+		&:hover {
+			@include sprite(1.3, 5.28);
+		}
+	}
+	.item-row .folder-icon {
+		@include sprite(1.3, 4.18);
+		&:hover {
+			@include sprite(1.3, 5.18);
+		}
+	}
+	.code-icon {
+		@include sprite(15.3, 1.28);
+	}
+	.delete-icon {
+		@include sprite(4.3, 7.28);
+		&:hover {
+			@include sprite(4.3, 8.28);
+		}
+	}
+	.css-icon {
+	  @include sprite(34.28, 1.28);
+
+	}
+	.scss-icon {
+	  @include sprite(36.28, 1.28);
+	}
+	.item-disabled {
+	  .css-icon,
+	  .scss-icon,
+	  .js-icon {
+		opacity: .5;
+	  }
+
+	}
+	.move-icon {
+	  @include sprite(45, 14);
+	}
+	.clear-icon {
+	  @include sprite(22.3, 7.28);
+	  &:hover {
+		@include sprite(22.3, 8.28);
+	  }
+	}
+	.chained-icon {
+	  height:22px;
+	  opacity:.4;
+	  @include sprite(15.5, 11.24);
+	  &:hover {
+		opacity:.7;
+		@include sprite(15.5, 12.24);
+	  }
+	  &.active {
+		opacity:1;
+		@include sprite(15.5, 12.24);
+		//@include sprite(15.5, 13.24);
+	  }
+	}
+	.edit-icon {
+		@include sprite(1.3, 7.28);
+		&:hover {
+			@include sprite(1.3, 8.28);
+		}
+	}
+	.copy-icon {
+		@include sprite(14.3, 4.28);
+		&:hover {
+			@include sprite(14.3, 5.28);
+		}
+	}
+	.add-icon {
+		@include sprite(2.3, 4.28);
+		&:hover {
+			@include sprite(2.3, 5.28);
+		}
+	}
+	.selector-icon {
+		 @include sprite(24.3, 4.28);
+		 &:hover {
+			 @include sprite(24.3, 5.28);
+		 }
+	}
+  	.hightlight-icon {
+	  @include sprite(23.28, 7.28);
+	}
+	.item-row .selector-icon {
+		@include sprite(24.3, 4.18);
+		&:hover {
+			@include sprite(24.3, 5.18);
+		}
+	}
+	.feather-icon {
+	  display: none; // only show occasionally
+		@include sprite(1.3, 26.28);
+	}
+	.item-row .feather-icon {
+		@include sprite(1.3, 26.18);
+	}
+	.disabled-icon {
+	  opacity: .8;
+	  @include sprite(33.3, 4.28);
+	  &:hover {
+		@include sprite(33.3, 5.28);
+	  }
+	  &.active {
+		opacity: 1;
+		@include sprite(33.3, 6.28);
+	  }
+	}
+	.info-icon {
+	  cursor: help;
+		@include sprite(8.3, 7.28);
+		&:hover {
+			@include sprite(8.3, 8.28);
+		}
+	}
+	.view-icon {
+		@include sprite(11.24, 7.28);
+		/* needs hover state &:hover {
+			@include sprite(8.3, 8.28);
+		}*/
+	}
+	.download-icon {
+		width:22px;
+		@include sprite(3.26, 7.28);
+		&:hover {
+			@include sprite(3.26, 8.28);
+		}
+	}
+	p {
+		margin:0 0 1em 0;
+	}
+	.link {
+		color:$wp_link;
+		cursor:pointer;
+		text-decoration: underline;
+		&:hover {
+			color: $wp_link_hover
+		}
+		a:focus {
+			color: $wp_link_focus;
+		}
+		a:active, a:focus {
+			outline: thin dotted;
+		}
+	}
+	.bright.link {
+		color:$green;
+	}
+	.tip {
+		font-style:italic;
+	}
+	p.tip {
+		margin-bottom:2em;
+
+	}
+	.hidden {
+		display:none;
+		&.show {
+			display:block;
+		}
+	}
+	.inner-wrap {
+		padding:1em;
+		@include susy-clearfix;
+	}
+	/*--------------------------------------------------------------
+	Notifications
+	--------------------------------------------------------------*/
+	.tvr-message {
+		padding:12px;
+		padding-bottom:0;
+		margin-bottom:12px;
+		background:$white;
+		border-left: 4px solid $lightGreen;
+		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+		.short {
+			font-weight:bold;
+			display: block;
+		}
+		&.tvr-info {
+			border-left-color: $lighterBlue;
+		}
+		&.tvr-warning {
+			border-left-color: $orange;
+		}
+		&.tvr-error {
+			border-left-color: $red;
+		}
+
+		.long {
+			font-style:italic;
+			p,ul,ol {
+				margin-bottom:0;
+				padding-bottom:12px;
+			}
+		}
+	}
+}
+
+
+#pref-standalone {
+	margin-top:20px;
+	.tvr-dialog {
+		display:block;
+		position:static;
+		height:auto;
+		cursor: pointer;
+		background: none;
+		padding:0 20px 0 0;
+		margin:0 20px 0 0;
+		.dialog-main {
+			box-shadow: none;
+			padding:0;
+			max-height: 100%;
+		}
+		.dialog-content {
+			padding:10px 0;
+		}
+		.close-icon,
+		.dialog-footer,
+		.explain {
+			display: none;
+		}
+	}
+  	.mt-tab {
+	  //border-bottom:0;
+	}
+  	span.save-preferences {
+	  float:left;
+	}
+}
+
+
+/*--------------------------------------------------------------
+Dialogs
+--------------------------------------------------------------*/
+
+// dialog header styling is useful for wizard, hence it's outside of .tvr-dialog {}
+.dialog-header,
+.dialog-footer {
+	background:$lightGrey;
+
+}
+.dialog-header {
+	height:40px;
+	margin:0 !important;
+	.dialog-icon {
+		float:left;
+		width:40px;
+		height:40px;
+		cursor:default !important;
+		&.active {
+			background-size:auto !important;
+			background:$darkGreen $largeLoadingGif !important;
+			margin-right:1em !important;
+		}
+	}
+	.text {
+		margin:11px;
+		margin-left:0;
+		display: inline-block;
+	}
+	.close-icon {
+		float:right;
+		margin:11px;
+		@include state-sprite(7.3, 4.28);
+	}
+}
+
+// tvr-dialog
+.tvr-dialog {
+	position:fixed;
+	@include box-sizing();
+	top:0;
+	left:0;
+	z-index:999911 !important;
+	width:100%;
+	height:100%;
+	cursor: pointer;
+	background: rgba(0, 0, 0, .85);
+	padding:40px;
+	//padding-bottom:90px; //	padding-bottom:50px; needs to be added to 80 for some reason
+
+	&.small-dialog {
+		 padding:40px 25%;
+		 padding-bottom:40px;
+	 }
+	&.medium-dialog {
+		padding:40px 15%;
+		padding-bottom:130px;
+	}
+
+	.dialog-main {
+		cursor: default;
+		padding-bottom:40px;
+	  	@include box-sizing();
+		height:100%;
+		position:relative;
+		background:$lightestGrey;
+		@include dialog-shadow();
+	}
+
+	.dialog-footer {
+		@include susy-clearfix;
+		@include box-sizing();
+		position:absolute;
+		bottom:0;
+		width:100%;
+		height:40px;
+		.tvr-popright {
+			position: static;
+			visibility: visible;
+		}
+	  	.mt-options-menu {
+		  	float:left;
+		  	width:360px;
+			margin:0;
+		  	* {
+			  margin:0;
+			  padding:0;
+			}
+			.mt-group > span:first-child,
+			.mt-menu-text,
+			.uit-par {
+			  display: none;
+			}
+			.mt-sub {
+			  float: right;
+			}
+		  	.mt-group {
+			 	list-style: none;
+  				float:right;
+			}
+			.mt-item {
+			  list-style: none;
+			  float: left;
+			  &.buyer_validated {
+				display: block;
+			  }
+			}
+			.mt-menu-icon {
+			  display: block;
+			  cursor: pointer;
+			  width:40px;
+			  height:40px;
+			}
+		}
+		.v-left-button {
+			width:40px;
+			float:left;
+			display: none;
+			&.popup-show {
+				display: block;
+			}
+		}
+		.preferences-tools {
+			width:80px;
+		}
+		.pack-tools {
+			width:120px;
+			height:40px;
+			.popright-sub {
+				width:80px;
+			}
+		}
+		.dialog-button {
+			float:right;
+			margin:8px !important;
+		}
+	}
+	.dialog-inner {
+		@include box-sizing();
+		padding-bottom:40px;
+		height:100%;
+	}
+	.dialog-content {
+		max-height:100%;
+		height:100%;
+		@include box-sizing();
+		padding:24px;
+	}
+
+	&.has-mt-tabs .dialog-content {
+		padding-bottom:62px;
+	}
+
+	.explain {
+		.heading {
+			clear:both;
+			margin-top:2.5em;
+		}
+		.full-about {
+			display: none;
+		}
+		ul {
+			margin-left:15px;
+		}
+	}
+	.content-main {
+		box-sizing: border-box;
+		//padding:20px;
+	  .microthemer_page_tvr-microthemer-preferences & {
+		padding-top:15px;
+	  }
+	}
+	&.sidebar {
+		.explain {
+			display: block;
+			box-sizing: border-box;
+			float:right;
+			width:40%;
+			padding:20px;
+		}
+		.content-main {
+			float:left;
+			width:60%;
+		}
+	}
+	.button-wrap {
+		clear:left;
+		padding-top:1em;
+	}
+
+	ul {
+		margin-left:1em;
+	}
+	li {
+		list-style: disc;
+		margin-bottom: 1em;
+
+	}
+	.ajax-loader {
+		margin-top:14px;
+		float:right;
+	  	&.left-align {
+		  float:left;
+		  margin:6px 8px;
+		}
+	}
+	ul.checkboxes {
+		margin:0 0 1em 0;
+		max-width:700px;
+		clear:left;
+		li {
+			list-style:none;
+			margin-bottom: 0.5em;
+			width:33%;
+			float:left;
+			line-height: 18px;
+		}
+		.tvr-icon {
+			float: left;
+			margin:-2px 8px 0 0;
+		}
+	}
+	.enter-name-explain {
+		clear:left;
+		padding-top:1em;
+	}
+
+}
+
+// dialog tabs
+div.dialog-tabs {
+	//display: none;
+	margin:0;
+	padding:.5em 0 0 40px;
+	.mt-tab {
+		top:1px;
+	}
+}
+
+// export
+#export-to-pack-dialog {
+	p.enter-name-explain {
+		padding-top:0;
+	}
+	p.combobox-wrap {
+		@include susy-clearfix();
+		margin-bottom:2em;
+		display: inline-block;
+	}
+	input.combobox {
+		min-width: 172px;
+	}
+	.ui-autocomplete.ui-menu {
+		max-height: 250px;
+	}
+	.dialog-icon {
+		@include sprite(13, 1);
+	}
+
+	ul.checkboxes {
+		clear:both;
+		overflow:hidden;
+		margin-bottom:1em;
+		&#toggle-checked-folders {
+			margin-bottom:6px;
+			.check-all-label {
+  				font-weight: bold;
+			}
+		}
+		li {
+			padding-bottom:0;
+		}
+	}
+
+
+}
+
+
+
+
+// import
+#import-from-pack-dialog {
+	.dialog-icon {
+		@include sprite(14, 1);
+	}
+	input.combobox {
+		min-width: 172px;
+	}
+	.ui-autocomplete.ui-menu {
+		max-height: 250px;
+	}
+	#overwrite-merge {
+		li {
+			float:none;
+			clear:left;
+			padding: 1em 0;
+		}
+	}
+
+}
+
+// adjust certain tabs for editor theme
+#display-css-code-dialog .mt-tab.active,
+#css-tab-areas .mt-tab.active {
+  background: $white;
+  border-bottom-color:$white;
+  .dark-editor & {
+	background: $darkEditor;
+	border-bottom-color: $darkEditor;
+	color: $lightestGrey;
+  }
+}
+
+#css-tab-areas .css-tab-js {
+  margin-left:15px;
+}
+
+// view css
+#display-css-code-dialog {
+  .dialog-icon {
+	  @include sprite(16, 1);
+  }
+  .content-main,
+  #view-css-areas,
+  .dialog-tab-field,
+  .css-code-wrap {
+	max-height: 100%;
+	height: 100%;
+  }
+  .dialog-tab-field {
+	position: relative;
+	box-sizing: border-box;
+	padding-top:40px;
+  }
+  .view-file {
+	position:absolute;
+	top:0;
+	left:0;
+	a {
+	  font-size:16px;
+	}
+
+	//font-family: "Courier New", Courier, monospace;
+	margin-bottom:1em;
+  }
+  .css-code-wrap {
+
+  }
+  textarea.gen-css-holder {
+	display: none;
+  }
+}
+.dark-editor #display-css-code-dialog {
+  .view-file {
+	color:$lightestGrey;
+  }
+  a {
+	color: $wp_link_hover;
+  }
+}
+
+// show revisions
+#display-revisions-dialog {
+	.dialog-icon {
+		@include sprite(17, 1);
+	}
+	table {
+  		background: transparent;
+	}
+  	tr {
+	  &:hover {
+		background: $lightGrey;
+	  }
+	}
+  	td {
+	  line-height: 40px;
+	  padding:0 10px !important;
+	  white-space: nowrap;
+	}
+	td.rev-icon {
+	  padding:0 !important;
+	  width: 40px;
+	  line-height: 40px;
+	}
+  	td.rev-action {
+	  	line-height: 18px;
+	  	span {
+		  margin:11px 0;
+		  span {
+			margin:0;
+			&.colored-box {
+			  margin:4px 6px 0 0;
+			}
+		  }
+		}
+	}
+	td.rev-icon,
+	td.rev-action {
+	  padding-left:0 !important;
+	  white-space: wrap;
+	  span {
+		display: inline-block;
+		float:left;
+		&.has-path-tt {
+		  cursor:help;
+		}
+		&.his-items {
+		  //border-bottom: 1px dotted $mediumGrey;
+		}
+		&.his-val {
+		  font-weight: bold;
+		  border:0;
+		}
+		&.info-icon {
+		  margin-left:7px;
+		}
+	  }
+	}
+
+	// ensure previous history displays nicely alongside new icon-based detailed history
+	tr.legacy-hi {
+  		td {
+		  line-height: 40px;
+		}
+	}
+
+  	// styles for lining up option-icons
+	@include line-up-prop-icons();
+
+  	// history icons
+	.h-i {
+	  cursor: default;
+	  cursor: not-allowed;
+	  &.lg-icon {
+		width:40px;
+		height:40px;
+		text-align: center;
+	  }
+	  &.tvr-icon {
+		margin:11px;
+	  }
+	  &.chained-icon {
+		margin: 9px 14px 9px 8px;
+	  }
+	  &.important-toggle {
+		color:$darkBlue;
+		&.active {
+		  color:red;
+		}
+	  }
+	  // sometimes we show chain as well as prop icon if on
+	  &:nth-of-type(2){
+		margin-left:-6px;
+		margin-right:0;
+		&.important-toggle {
+		  width:8px;
+		  margin-right:21px;
+		}
+	  }
+	}
+
+}
+
+// edit preferences
+#display-preferences-dialog {
+	.dialog-icon {
+		@include sprite(20, 1);
+	}
+	.ui-autocomplete.ui-menu {
+		max-height: 112px; // css units
+	}
+}
+#functions-php {
+	textarea {
+		width:100%;
+		height:460px;
+
+	}
+}
+.form-field-list {
+	margin:0 0 2em 0 !important;
+	li {
+		list-style:none;
+		clear:left;
+		padding: .5em;
+		margin:0;
+		@include susy-clearfix;
+		&:hover {
+		  background: $lightGrey;
+		}
+		&.show {
+			display: block;
+		}
+	}
+	li.edge-mode-unavailable {
+		font-style: italic;
+	}
+	label {
+		display: table-cell;
+		float: left;
+		width:330px;
+	  	max-width:45%;
+		padding-right: 15px;
+
+		cursor: help;
+		// border-bottom: 1px dotted $mediumGrey;
+		&.text-label {
+		  line-height: 26px;
+		}
+	}
+	.p-option-wrap {
+		float:left;
+		display: block;
+		width:70px;
+
+	}
+	input {
+		width:300px !important;
+	  	max-width:45%;
+		font-weight: normal;
+		&.combobox {
+			width:274px !important;
+		}
+	}
+	.reveal-mq-sets {
+
+	}
+
+	// Css Units Preferences
+	&.css_units {
+		.section_title {
+			font-weight: bold;
+			margin: 1em 0 .4em 0;
+		  	&:hover {
+			  background: transparent;
+			}
+		}
+		.combobox {
+			min-width: 130px;
+			width: 130px !important;
+		}
+	}
+}
+
+// responsive media queries
+#edit-media-queries-dialog {
+	.dialog-icon {
+		@include sprite(10, 4);
+			width:40px;
+			height:40px;
+			margin:0;
+	}
+	form {
+		display:block;
+		@include susy-clearfix;
+	}
+
+	#add-m-query {
+
+		margin-bottom: 1em;
+	}
+}
+#m-queries {
+	margin:1em 0;
+	clear:both;
+	#mq-list {
+		margin-left:0;
+	}
+	li {
+		list-style: none;
+		background: $lightGrey;
+		@include border-radius(4px);
+		padding:1em;
+		margin-bottom:1em;
+		cursor: move;
+	}
+	.mq-edit-wrap {
+		margin-right:24px;
+		margin-bottom:1em;
+		input,
+		textarea {
+			display: inline-block;
+			width:75%;
+		}
+	}
+	.mq-label-wrap {
+
+
+	}
+	label {
+		cursor: move;
+		display: inline-block;
+		width:20%;
+		float: left;
+	}
+	.mq-checkbox-wrap {
+		overflow: hidden;
+		margin-bottom:0;
+		label {
+			float:left;
+		}
+		.fake-checkbox,
+		.ef-label {
+			line-height: 1.5;
+		}
+		.fake-checkbox {
+			margin-top:2px;
+		}
+	}
+
+	input.m-label {
+
+	}
+	.mq-query-wrap {
+		label {
+			min-height:50px;
+		}
+	}
+	.m-code {
+		font-weight:normal;
+		direction: ltr;
+		min-height:50px;
+	}
+
+	#m-query-hidden,
+	.m-query-tpl {
+		display:none;
+	}
+	.del-m-query {
+		float:right;
+	}
+}
+
+// unlock microthemer
+#unlock-microthemer-dialog {
+	.dialog-icon {
+		@include sprite(9, 7);
+	}
+}
+
+// manage packs
+#manage-design-packs-dialog {
+	.dialog-icon {
+		@include sprite(21, 1);
+	}
+	.dialog-content {
+		padding:0;
+	}
+}
+
+// docs
+#program-docs-dialog {
+	.dialog-icon {
+		@include sprite(19, 1);
+	}
+	.dialog-content {
+		padding:0;
+	}
+}
+
+.microthemer-iframe {
+	width:100%;
+	height:100%;
+}
+
+// integration
+#integration-dialog {
+	.dialog-icon {
+		@include sprite(33, 1);
+	}
+}
+
+
+
+
+/*--------------------------------------------------------------
+Visual View Areas
+--------------------------------------------------------------*/
+#visual-view {
+	position:fixed;
+	top:0;
+	left:0;
+	height: 100%;
+	width: 100%;
+	z-index:9999;
+	background:$lightGrey;
+}
+
+
+/*--------------------------------------------------------------
+Top Toolbar
+--------------------------------------------------------------*/
+
+#v-top-controls {
+	min-height:40px;
+	background:$lightGrey;
+	position: relative;
+	z-index:99997;
+	// to fix bug when options are opacity 50 (disabled)
+	.right-stuff-wrap {
+		position: absolute;
+		top:40px;
+		right:0;
+		z-index:99998;
+	}
+	.show_rulers & {
+		.frame-shadow {
+			display: none;
+		}
+	}
+}
+
+#starter-message {
+	line-height: 40px;
+	font-style: italic;
+	float:left;
+}
+.cta-wrap {
+	/*width:200px;
+	position:absolute;
+	top:0px;
+	right:440px;
+	z-index: 99998;
+	*/
+  	float:right;
+}
+.cta-button {
+	float:right;
+	margin:7px 8px 0 0 !important;
+	.tvr-icon {
+		margin-right:5px;
+	}
+	&.unlock-cta {
+
+		span {
+			float:left;
+			&.tvr-icon {
+				@include sprite(9.3, 10.3);
+			}
+		}
+	}
+	&.buy-cta {
+		margin-left:0 !important;
+		@include border-radius-separate(0, 3px, 3px, 0);
+		span {
+			float:left;
+			&.tvr-icon {
+				@include sprite(10.3, 10.3);
+			}
+		}
+	}
+}
+.frame-shadow {
+	position:absolute;
+	bottom:-8px;
+	left:0;
+	width:100%;
+	height:8px;
+	background: url(../images/drop-shadow-top.png);
+	#tvr-options & {
+		top:120px;
+		&.pg-has-labels {
+			top:135px;
+		}
+	}
+}
+
+/*--------------------------------------------------------------
+Scrollable area
+--------------------------------------------------------------*/
+.scrollable-area,
+.scrollable-area-not-live {
+	overflow: hidden;
+	max-height: 340px;
+	//height: 340px; // because safari doesn't take into account max-height when creating scrollbar divs
+	//box-sizing: border-box;
+	padding:12px;
+	margin-top:0;
+}
+.mCSB_scrollTools {
+	width:6px;
+}
+.mCSB_dragger_bar {
+	background-color:$lighterBlue !important;
+}
+.mCSB_draggerRail {
+	cursor:pointer;
+}
+// prevent main menu from jumping when scollbars appear or dissappear
+#tvr-main-menu,
+#wizard-panes {
+	.mCSB_inside > .mCSB_container,
+	.mCSB_container.mCS_no_scrollbar_y.mCS_y_hidden {
+		margin-right: 18px; // same as with scrollbar
+	}
+}
+
+
+
+
+/* for dropdowns */
+.ui-menu {
+	.mCSB_container {
+		margin-right:10px;
+	}
+	.mCSB_scrollTools,
+	.mCSB_draggerRail,
+	.mCSB_dragger_bar {
+		@include border-radius(3px!important);
+	}
+}
+
+
+/*--------------------------------------------------------------
+Popdown/right menu
+--------------------------------------------------------------*/
+.tvr-popdown-wrap {
+	height:31px;
+	&:hover {
+		.tvr-popdown {
+			top:31px;
+			&#full-logs {
+				top:71px;
+			}
+		}
+	}
+}
+.tvr-popdown {
+	//visibility: hidden;
+	position: fixed;
+	z-index:99995;
+	top:-99999px;
+	// top:40px;
+	width: 500px;
+	max-height:400px;
+	overflow:hidden;
+	background:$lightGrey;
+	border:1px solid $mediumGrey;
+	//@include grey-shadow-bottom();
+
+}
+
+.tvr-popright-wrap {
+	height:40px;
+	position: relative;
+	border:1px solid $lightGrey;
+	.tvr-dialog & {
+		border:0;
+	}
+	&.ruler-tools {
+		display: none; // not done guides yet
+	}
+	&:hover {
+		border-color: $mediumGrey;
+		height:80px;
+		&.pack-tools,
+		&.reset-tools {
+			height:120px;
+		}
+
+		.tvr-popright {
+			visibility: visible;
+		}
+	}
+}
+.tvr-popright {
+	visibility: hidden;
+	position: absolute;
+	z-index:99995;
+	left:0;
+	top:40px;
+	width: auto;
+	overflow:hidden;
+	background: $lightGrey;
+	.tvr-dialog & {
+		top:40px;
+		left:0;
+		padding:0;
+		.popright-sub {
+
+		}
+	}
+}
+.popright-sub {
+	overflow: hidden;
+	width: 40px;
+	@include box-shadow(0, 2px, 2px, $alphaShadow);
+	.popright-sub & {
+
+	}
+
+}
+.integration-sub {
+	width: 160px;
+	.v-left-button {
+		width:100%;
+		float:none;
+	}
+}
+
+/*--------------------------------------------------------------
+Status board and full logs
+--------------------------------------------------------------*/
+#status-board {
+	@include susy-clearfix;
+	float:right;
+	display:inline-block;
+	cursor:pointer;
+	.tvr-popdown {
+		right:0px;
+	}
+	.info-icon {
+		float:right;
+		margin:11px;
+	}
+	.logs {
+		margin-bottom:0;
+	}
+}
+#status-short,
+.dialog-status {
+  float:right;
+  display:inline-block;
+  line-height: 1;
+  margin:5px 5px 5px 0;
+  &.active {
+	color:$shadowColor;
+
+  }
+  &.active,
+  &.tvr-message {
+	padding:5px 8px;
+	margin-right:5px;
+  }
+  &.hide-boring {
+	display: none;
+  }
+  .show_code_editor & {
+	margin-right:8px;
+  }
+}
+
+.dialog-status {
+  text-transform: none;
+  font-weight: normal;
+  margin-top:14px;
+  font-size:12px;
+}
+
+#full-logs {
+	text-align: left;
+	cursor: default;
+	.logs {
+		ul {
+			list-style: disc;
+			margin-left:15px;
+		}
+	}
+}
+#tvr-dismiss {
+	span {
+		float:right;
+	}
+	span.link {
+		display: inline-block;
+		line-height: 1.5;
+		margin-top:-1px;
+		padding-left:2px;
+		text-transform: uppercase;
+	}
+	span.close-icon {
+		@include sprite(7.3, 4.28);
+	}
+
+}
+
+
+#tvr-manage {
+	#full-logs {
+		margin:1em;
+	}
+}
+#log-item-template {
+	display: none;
+}
+#script-feedback {
+	display: none;
+}
+
+/*--------------------------------------------------------------
+Quick Selector Nav Arrows
+--------------------------------------------------------------*/
+// set common z-index context for tabs and nav so children can stack appropriately
+#z-control {
+  position: relative;
+  z-index:99994;
+}
+#tvr-nav,
+#responsive-bar {
+	position: absolute;
+	.show_code_editor & {
+		display: none;
+	}
+}
+#tvr-nav {
+	height:40px;
+	top:0;
+	left:0;
+	padding-left: 40px;
+	width:100%;
+	background: $lightGrey;
+	@include box-sizing();
+	#quick-nav {
+		float:left;
+	}
+	.scroll-buttons {
+		float:left;
+		margin:11px 5px 11px 3px;
+	}
+	#vb-focus-prev {
+		@include state-sprite(17.3, 4.28);
+		&.disabled {
+			opacity: .3;
+			&:hover {
+				@include sprite(17.3, 4.28);
+			}
+		}
+	}
+	#vb-focus-next {
+		margin-left:0;
+		@include state-sprite(18.3, 4.28);
+		&.disabled {
+			opacity: .3;
+			&:hover {
+				@include sprite(18.3, 4.28);
+			}
+		}
+	}
+	#current-selector {
+		//line-height: 40px;
+	  	padding-top:11px;
+		display:inline-block;
+		float:left;
+		@include susy-clearfix;
+		span {
+			float:left;
+			display: inline-block;
+			margin-left:10px;
+			cursor: pointer;
+			&.breadcrumb-arrow {
+				color:$shadowColor;
+				cursor:default;
+			}
+			&.first-breadcrumb {
+				margin-left:0;
+			}
+		  	&.item-disabled {
+			  @include show-disabled();
+			}
+
+		}
+		.sec-in-focus {
+			font-weight:bold;
+		}
+	  	.cur-sel-highlight {
+		  margin-top:11px;
+		}
+
+	}
+}
+
+
+
+/*--------------------------------------------------------------
+General Tab Styling
+--------------------------------------------------------------*/
+.query-tabs {
+	padding:0 250px 0 0;
+	background: $lightGrey;
+	@include susy-clearfix;
+	border-bottom: 1px solid $mediumGrey;
+	.mt-tab {
+		border-radius: 6px 6px 0 0;
+		float: left;
+		padding: 6px 11px;
+		line-height: 18px;
+		display: block;
+		position: relative;
+		top: 1px;
+		left: 1px;
+		cursor: pointer;
+		border: 1px solid $mediumGrey;
+		border-bottom-color: $mediumGrey;
+	  	color:$washedOut;
+	  	//background: yellow;
+	  	.mq-tab-txt {
+		  float: left;
+		}
+		&.quick-opts-wrap {
+		  @include hover-fade-in('.quick-opts', .15s, .75s, bottom, 100%);
+		}
+	  	.quick-opts {
+		  .quick-opts-inner {
+			// center the options
+			width:61px;
+			margin-left:-37px;
+		  }
+		}
+		&.hasValues {
+		  @include sprite(1.1, 26.1);
+		  padding-left: 30px;
+		}
+	  	&.item-disabled {
+		  .mq-tab-txt {
+			@include show-disabled();
+		  }
+		}
+		&:hover {
+			opacity: 1;
+		}
+		&.active {
+			border-bottom-color: $lightestGrey;
+			background-color: $lightestGrey;
+			font-weight: bold;
+		  	color:$darkBlue;
+			.feather-icon {
+			  opacity: 1;
+			}
+		}
+	}
+
+}
+
+// The responsive tabs
+#responsive-bar {
+	top:40px;
+	left:0;
+	width:100%;
+	@include box-sizing();
+	background: $lightGrey;
+	.edit-mq {
+		display: block;
+		float: left;
+		width: 38px;
+		height: 27px;
+		margin-top: 3px;
+		@include sprite(10, 4.22);
+		cursor: pointer;
+	}
+	.mq-tab {
+		//top: 2px;
+	}
+}
+
+/*--------------------------------------------------------------
+Folder navigation menu
+--------------------------------------------------------------*/
+#tvr-main-menu {
+	float:left;
+	width:40px;
+	height:40px;
+	cursor: default;
+	@include sprite(1, 4);
+	input, textarea {
+		background:$white;
+	}
+	.main-menu-tip-trigger {
+		width:22px;
+		height:18px;
+	  	margin:11px 9px 0 9px;
+	  	cursor: pointer;
+		display: block;
+	}
+	.main-menu-popdown {
+		cursor: default;
+		left:0;
+		position: fixed;
+		z-index:99999;
+		top:-99999px;
+		// top:40px;
+		min-width: 500px;
+		max-height:500px; // replaced by JS
+		overflow:hidden;
+		background:$lightGrey;
+		border:1px solid $mediumGrey;
+		//@include box-shadow(0, 3px, 3px, $shadowColor);
+		//@include grey-shadow();
+		&.bye-for-now {
+			overflow:visible;
+		}
+	}
+	&.on .main-menu-popdown {
+		top:41px;
+	}
+
+}
+
+
+
+
+#add-new-section {
+	width:100%;
+	//border-bottom:1px solid $mediumGrey;
+	.inner-wrap {
+		@include susy-clearfix;
+		padding-bottom:0;
+	}
+	.new-section {
+		input {
+			width:40%;
+		}
+	}
+}
+#tvr-menu {
+	margin:0;
+}
+/* Make Folder/Selector names capitalised */
+.tp-hack {
+	display: inline-block;
+	float: left;
+}
+
+/* Only capitalize if pref - on by default in English */
+.tvr-caps {
+  #add-new-section .new-section input,
+  .rename-input,
+  .selector-name-input,
+  #wizard-name,
+  #wizard_folder,
+  #export-to-pack-dialog input.combobox,
+  #import-from-pack-dialog input.combobox,
+  #html-computed-css .comp-prop-label,
+  #sel-in-focus,
+  .name-text
+  {
+	text-transform: capitalize;
+  }
+}
+
+.strk {
+	margin:0 0 0 0;
+	vertical-align: top;
+	&:hover {
+	  background: $lightestGrey;
+	}
+	.ajax-loader {
+		float:right;
+		margin-top:2px;
+	}
+	.item-row {
+		@include susy-clearfix;
+
+		padding:0 6px;
+		& > span {
+			padding-top:4px;
+			padding-bottom:4px;
+
+		}
+
+	}
+	.add-selector-list-item {
+	  margin-bottom: 0;
+	  .item-row {
+		padding:0;
+	  }
+	}
+	.item-row {
+		.item-name {
+			cursor:pointer;
+			padding:0;
+			.name-text {
+				padding-top:4px;
+				padding-bottom:4px;
+				display: inline-block;
+			}
+		}
+	}
+	.section-name {
+		font-weight:bold;
+	}
+	.sel-row {
+		//margin-left:44px;
+	  	margin-left:18px;
+	}
+	.edit-section-form {
+		display: inline-block;
+		float:left;
+		.span, input {
+			float:left;
+		}
+	}
+	.cancel {
+		margin:4px 0 0 5px;
+	}
+	.menu-arrow,
+	.folder-icon,
+	.section-name,
+	.selector-icon,
+	.feather-icon {
+		float:left;
+	}
+	.folder-icon,
+	.selector-icon {
+		margin-right:8px;
+	}
+	.sortable-icon{
+	  	//display: none !important;
+		cursor: move !important;
+
+	}
+	.manage-icons {
+		float:right;
+		display:none;
+		span {
+			float:right;
+			margin-left:6px;
+		}
+	}
+	.sec-row:hover .manage-section-icons,
+	&.strk-sel:hover .manage-selector-icons {
+		display:inline;
+	}
+	.selector-sub {
+	  	display: none;
+		clear:both;
+		margin:0 0 0 0;
+	  	padding-bottom:6px;
+		&.normal {
+		  display: block;
+		}
+		&.sender-size-padding {
+			padding-bottom:26px; // so menu retains size when it loses an item, prevents jumpyness.
+		}
+	}
+  	// create enough room for new selector to be dragged into
+  	&.is-open {
+	  .selector-sub {
+		min-height:26px; // the height of one sel.
+	  }
+	}
+
+  	.selector-css-textarea {
+	  resize: vertical;
+	}
+	// polyfills
+	.polyfills {
+		.input-icon-toggle {
+			float:left;
+			margin:3px 8px 0 0;
+			&.pie-toggle {
+				@include state-sprite(26.28, 4.28);
+			}
+			&.boxsizing-toggle {
+				@include state-sprite(25.28, 4.28);
+			}
+		}
+
+	}
+	.add-selector-list-item .polyfills {
+		display: none;
+	}
+
+	&.hasValues.strk-sec .section-feather,
+	&.hasValues.strk-sel .selector-feather {
+	  display: inline-block !important;
+	  margin-right:6px;
+	}
+	&.item-disabled.strk-sec .section-name,
+	&.item-disabled.strk-sel .selector-name {
+	  .name-text {
+		@include show-disabled();
+	  }
+	}
+
+}
+#ui-totals-count {
+	font-weight:bold;
+	vertical-align: bottom;
+	padding:1em;
+	border-top:1px solid $mediumGrey;
+	@include susy-clearfix;
+	span {
+		display:block;
+		float:left;
+		margin-right:5px;
+		cursor: default !important;
+	}
+	.total-stats,
+	.total-folders {
+		margin-right:1em;
+	}
+
+}
+
+
+/*--------------------------------------------------------------
+Quick Edit
+--------------------------------------------------------------*/
+.bye-for-now {
+	#add-new-section,
+	.section-tag,
+	#ui-totals-count {
+		display:none;
+	}
+	.scrollable-area {
+		padding:0;
+	}
+	.hello-me {
+		display: block;
+		&.scrollable-area,
+		.scrollable-area {
+			padding:12px 12px 20px 12px;
+		}
+	}
+	// selector content only
+	.goodbye-section {
+		.sec-row,
+		.add-selector-list-item,
+		.selector-tag {
+			display:none;
+		}
+		.hello-me {
+			display:block;
+		}
+		.sel-row:hover {
+			background:$lightGrey;
+		}
+		.selector-name {
+			cursor: default;
+		}
+		// disable copy for folder and single sel - gets tricky otherwise, and you can't see the copy appear
+		// also hide the toggle as there is no need for them to close the selector
+		.copy-selector {
+			display:none !important;
+		}
+		.manage-icons {
+			display: inline;
+		}
+
+	}
+	.copy-section {
+		display:none !important;
+	}
+	.sec-row .manage-icons {
+		display: inline !important;
+	}
+	// adjusted styling for section/selector
+	.quick-edit-mode {
+		position:fixed;
+		z-index:999911 !important;
+		top:41px;
+		left:0;
+		min-width:500px;
+		background: $lightGrey;
+		border:1px solid $mediumGrey;
+		//@include grey-shadow();
+		.sel-row {
+			margin-left:0;
+		}
+		div.edit-selector {
+			padding:1em 0 !important;
+		}
+
+	}
+}
+
+.quick-edit-mode.selector-tag {
+	.toggle-modify-selector {
+		display: none !important;
+	}
+}
+
+
+
+
+/*--------------------------------------------------------------
+Frontend
+--------------------------------------------------------------*/
+#v-frontend-wrap {
+	//z-index:99992;
+	@include box-sizing();
+	background: $lightBlue;
+	position:relative;
+	width: 100%;
+	//border-top:1px solid $rulerGrooves;
+
+	.show_rulers.show_interface & {
+		padding:19px 0 0 19px;
+	}
+	.show-advanced.show_interface & {
+		padding-right:350px;
+	}
+}
+#v-frontend {
+	margin:0 auto 0 0;
+	height: 100%;
+	max-width: 100%;
+	//position:relative;
+	@include box-sizing();
+	@include grey-shadow();
+	//padding-right:18px;
+	//overflow: hidden; // alternative way to deal with unwanted admin bar
+}
+#rHighlight-wrap {
+	position: absolute;
+	top:0;
+	z-index: 10;
+	height:19px;
+	width:100%;
+	.show_code_editor & {
+		display: none;
+	}
+	div {
+		position: absolute;
+		left:0;
+		height:19px;
+		background: $lightBlue;
+		opacity: .5;
+	}
+	#min-neg {
+		left:0;
+	}
+
+}
+#rHighlight {
+	position: absolute;
+	top:0;
+	height:19px;
+	z-index: 8;
+	opacity: 1;
+	background: $darkBlue;
+	.show_code_editor & {
+		display: none;
+	}
+}
+
+#viframe {
+	background: #FFFFFF;
+	border: 0;
+	display: block;
+	height: 100%;
+	width: 100%;
+	position:relative;
+}
+#iframe-dragger {
+	display: none;
+	position:absolute;
+	right:0;
+	top:0;
+	width:17px;
+	border-right: 1px solid $mediumBlueAlpha;
+	height:100%;
+	background: transparent;
+}
+
+
+
+/*--------------------------------------------------------------
+Top Right Toolbar
+--------------------------------------------------------------*/
+#v-left-controls .mt-options-menu {
+  margin:0 8px 0 0;
+  float: right;
+  li.mt-group {
+	float:right;
+	margin:0;
+	position: relative;
+	cursor: default;
+	& > span {
+	  line-height:24px;
+	  padding:8px 12px;
+	  font-weight: bold;
+	  display: block;
+	  &:hover {
+		//text-shadow: 0 1px 0 $white;
+
+	  }
+	}
+	&:hover {
+	  > span {
+		text-decoration: underline;
+	  }
+	  ul.mt-sub {
+		display: block;
+	  }
+	}
+  }
+  ul.mt-sub {
+	display: none;
+	position: absolute;
+	padding:0px 0;
+	top:40px;
+	right:0;
+	background: $lightGrey;
+	white-space: nowrap;
+	border:1px solid $mediumGrey;
+	//padding-top:15px;
+	@include grey-shadow();
+	@include border-radius(3px);
+	&.expanded {
+	  right:-215px;
+	}
+  }
+  li.view ul {
+	//display: block;
+  }
+  li.mt-item {
+	@include susy-clearfix;
+	padding:0 15px 0 5px;
+	margin:0;
+	//margin:-6px 0;
+	position: relative;
+	cursor: pointer;
+	span {
+	  display: inline-block;
+	  vertical-align: top;
+	}
+	&:hover {
+	  background: $lightestGreyOpacity;
+	  .mt-menu-icon {
+		opacity:1;
+	  }
+	}
+	// back to dahsboard/frontend should be actual links for right-click, open in new tab
+	&.item-link {
+	  padding:0;
+	  a {
+		display: block;
+		padding:0 15px 0 5px;
+		color:$darkBlue;
+		&:hover {
+		  color:$darkBlue;
+		}
+	  }
+	}
+	// unlock
+	&.item-unlock-microthemer {
+	  //color:$darkGreen;
+	  font-weight: bold;
+	}
+	// new set divider
+	&.new-set {
+	  border-top:1px solid $mediumGrey;
+	}
+	// toggle
+	&.mt-toggle {
+	  cursor: default;
+	  .mt-menu-text {
+		padding-right:52px; // enough for toggle
+	  }
+	  .onoffswitch {
+		position:absolute;
+		top:9px;
+		right:15px;
+	  }
+	}
+  }
+  .mt-menu-icon {
+	width:40px;
+	height:40px;
+	opacity:.9;
+  }
+  .mt-menu-text {
+	line-height: 40px;
+	//padding-right:12px;
+  }
+  .tvr-button{
+	display: inline-block;
+	margin-left:6px;
+	width:42px;
+	text-align: center;
+  }
+  .combobox-wrap {
+	&.show {
+	  display: inline-block;
+	}
+	margin-top:7px;
+	@include susy-clearfix;
+	padding:0 6px;
+	width:272px;
+  }
+  .combobox {
+	width:204px;
+  }
+  .ui-autocomplete.ui-menu {
+	max-height: 114px;
+  }
+}
+
+.notify-draft {
+  display: none;
+  float:right;
+  margin:5px;
+  padding:6px;
+  background: $mediumOrange;
+  cursor: help;
+  color:$white;
+  @include border-radius(3px);
+  .draft_mode & {
+	display: block;
+  }
+  span {
+	vertical-align: top;
+	display: inline-block;
+  }
+  .nd-icon {
+	@include sprite(34.28, 26.28);
+	margin-right:4px;
+	cursor: inherit !important;
+  }
+}
+
+li.buyer_validated {
+  .plugin-unlocked & {
+	display: none;
+  }
+}
+
+
+.onoffswitch {
+  display: inline-block;
+  position: relative;
+  width: px-em(56);
+  -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+  display: none;
+}
+$time: 0.1s;
+.onoffswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid $mediumGrey;
+  background-color: $lightestGrey;
+  border-radius: px-em(20);
+
+}
+.onoffswitch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin $time ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: px-em(26);
+  padding: 0;
+  line-height: px-em(26);
+  //color: white;
+  //font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+  content: " "; // on
+  padding-left: px-em(10);
+  background-color: $green;
+  //color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+  content: " "; // off
+  padding-right: px-em(10);
+  background-color: $lightestGrey;
+  //color: #999999;
+  //text-align: right;
+}
+.onoffswitch-switch {
+  display: block;
+  width: px-em(20);
+  margin:px-em(3) px-em(4);
+  background: $white;
+  position: absolute;
+  top: 0;
+  height:14px;
+  //bottom: 0;
+  right: px-em(25);
+  border: 1px solid $mediumGrey;
+  border-radius: px-em(20);
+  transition: all $time ease-in 0s;
+}
+.onoffswitch.on .onoffswitch-inner {
+  margin-left: 0;
+}
+.onoffswitch.on .onoffswitch-switch {
+  right: 0;
+  border-color:$darkGreen;
+}
+
+
+#v-left-controls-wrap {
+	position:absolute;
+	z-index:99998;
+	right:0;
+	top:0;
+	/*height:40px;
+	width:(11*40)+(5*2)+px; //2px for hover border
+	.plugin-unlocked & {
+		width:(10*40)+(5*2)+px;
+	}
+   */
+}
+
+#v-left-controls-old {
+	display: none;
+}
+#v-left-controls {
+	@include susy-clearfix;
+}
+.v-left-button {
+	float:left;
+	height:40px;
+	width:40px;
+	cursor: pointer;
+	display: block;
+	-webkit-transition:none !important;
+	-moz-transition:none !important;
+	-o-transition:none !important;
+	transition:none !important;
+	&:focus {
+		outline: none;
+		box-shadow:none;
+	}
+	&.new-icon-group {
+
+	}
+
+}
+#m-logo {
+  top:37px;
+  opacity: 0.6;
+  .do-not-show-admin-bar & {
+	  top:5px;
+
+  }
+  position:absolute;
+  z-index:99998;
+  left:5px;
+  width:30px;
+  height:30px;
+  cursor: pointer;
+  background:$darkBlue;
+  @include sprite(9.13, 5.13);
+
+  &.on {
+	  top:5px;
+  }
+  &:hover,
+  &.on {
+	  opacity: 1;
+  }
+  &.active {
+	  background-size:auto;
+	  background:$darkGreen $largeLoadingGif;
+  }
+}
+.draft-mode {
+  @include sprite(34, 24);
+}
+.switch-preview {
+  @include sprite(30, 24);
+}
+.demo-video {
+  @include sprite(33, 24);
+}
+.responsive-tutorial {
+  @include sprite(31, 24);
+}
+.support-forum {
+  @include sprite(32, 24);
+}
+.back-to-frontend {
+  @include sprite(35, 24);
+}
+.toggle-highlighting {
+  @include sprite(23, 1);
+}
+.toggle-rulers {
+  @include sprite(42, 1);
+}
+.remove-guides {
+  @include sprite(14, 7);
+}
+.program-docs {
+  @include sprite(19, 1);
+}
+.save-interface {
+  @include sprite(12, 1);
+}
+.export-to-pack {
+	 @include sprite(13, 1);
+}
+.import-from-pack {
+	@include sprite(14, 1);
+	&.descriptive-icon {
+		width:40px;
+		height:40px;
+		display: inline-block;
+	}
+}
+.edit-css-code {
+	@include sprite(15, 1);
+}
+.display-css-code {
+	@include sprite(16, 1);
+}
+.display-revisions {
+	@include sprite(17, 1);
+}
+.edit-media-queries {
+	@include sprite(13, 7);
+}
+.display-preferences {
+	@include sprite(20, 1);
+}
+.manage-design-packs {
+	@include sprite(21, 1);
+}
+.unlock-microthemer {
+  @include sprite(9, 7);
+  #v-left-controls &.unlocked {
+	display: none;
+  }
+}
+.folder-reset{
+  @include sprite(31, 1);
+}
+.clear-styles {
+  @include sprite(32, 1);
+}
+.integration {
+  @include sprite(33, 1);
+}
+.display-share {
+  @include sprite(18, 1);
+}
+.back-to-wordpress {
+  @include sprite(24, 1);
+}
+.toggle-full-screen {
+	@include sprite(28, 4);
+	&.on {
+		@include sprite(29, 5);
+	}
+}
+
+/*
+#v-left-controls .unlock-microthemer.unlocked {
+	display: none;
+}
+*/
+
+// code editor save button
+.save-button {
+  opacity: .9;
+  @include sprite(12.28, 1.28);
+  &:hover {
+	opacity: 1;
+  }
+  .dark-editor & {
+	@include sprite(12.28, 3.28);
+  }
+}
+
+/*--------------------------------------------------------------
+iframe width slider
+--------------------------------------------------------------*/
+// we don't need to display the buttons anymore but they are sueful for storeing values
+#v-mq-buttons {
+	display:none;
+}
+#v-mq-controls {
+	position:absolute;
+	z-index:99900;
+	top:0;
+	left:18px;
+	width:100%;
+	@include box-sizing();
+	padding-right:18px;
+	@include susy-clearfix();
+	height:18px;
+	//margin-left:18px;
+}
+#v-mq-slider,
+#iframe-pixel-width,
+#iframe-max-width,
+#iframe-min-width	{
+	//float:right;
+	display:block;
+}
+#v-mq-slider {
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	cursor:pointer;
+	background: transparent;
+	border:0;
+	//opacity: .9;
+	@include grey-shadow();
+	cursor:e-resize;
+	//display: none;
+	#v-mq-controls:hover & {
+
+	}
+
+	.ui-slider-handle {
+		visibility: hidden;
+		background: $lightGreen;
+		border:0;
+		top:0;
+		right:0;
+		width:1px;
+		height:18px;
+		@include border-radius(3px);
+	}
+}
+#iframe-pixel-width {
+	font-weight:bold;
+	padding:2px 8px;
+	min-width:40px;
+	text-align:center;
+	display: none;
+}
+#iframe-max-width,
+#iframe-min-width	{
+	float:right;
+	display:inline-block;
+	margin:4px 8px;
+	font-size:11px;
+	display: none;
+}
+
+/*--------------------------------------------------------------
+Common device preview
+--------------------------------------------------------------*/
+#common-devices-preview {
+	position:absolute;
+	z-index:99900;
+	top:0;
+	left:0;
+	width:18px;
+	height:18px;
+	border:0;
+	.white-arrows {
+		background: url(../images/preview-arrows.png) no-repeat -11px -11px;
+		&:hover {
+
+		}
+	}
+	.tvr-popright {
+		top:0;
+		left:0;
+		width: 300px;
+		background: $mediumBlueAlpha;
+	}
+	.scrollable-area {
+		padding-top:25px;
+		max-height: 250px;
+	}
+	.mCSB_dragger_bar {
+		background-color: $mediumBlue !important;
+	}
+	ul {
+		margin:0;
+		padding:0 0 0 16px;
+	}
+	li {
+		display: block;
+		margin:0;
+		cursor: pointer;
+		color:$white;
+		font-weight: bold;
+		padding:0;
+		opacity:.7;
+		&.mt-screen-preview {
+			overflow: hidden;
+		}
+		&:hover,
+		&.clicked {
+			opacity:1;
+		}
+		&.clicked {
+			background: $white;
+			color: $mediumBlue;
+		}
+		span {
+			display: block;
+			padding:2px 3px;
+			float:left;
+			&.mob-wxh {
+				width:70px;
+			}
+		}
+	}
+	#current-screen-width {
+		width:18px;
+		height:18px;
+		position: absolute;
+		top:0;
+		left:0;
+		&.warn {
+			//@include sprite(46.28, 1.27);
+		}
+	}
+}
+#height-screen {
+	width:100%;
+	height:100%;
+	position: absolute;
+	top:100%;
+	background: $lightBlueAlpha;
+}
+
+/*--------------------------------------------------------------
+Accordion styling
+--------------------------------------------------------------*/
+.accordion-heading {
+	cursor: pointer;
+}
+.accordion-item {
+	display: none;
+	.show-content & {
+		display: block;
+	}
+}
+
+/*--------------------------------------------------------------
+The selector wizard
+--------------------------------------------------------------*/
+#advanced-wizard {
+	display: none;
+	position: absolute;
+	z-index:99999;
+	top:0;
+	right:0;
+	width:349px;
+	border-right:1px solid $mediumGrey;
+	@include grey-shadow();
+	height:100%;
+	background: $lightestGrey;
+	.show-advanced & {
+		display: block;
+	}
+
+	// wizard header
+	.dialog-header {
+		background: $lightestGrey;
+		border-bottom: 1px solid $mediumGrey;
+		.dialog-icon {
+			@include sprite(24, 4);
+		}
+		a {
+			text-transform: none;
+			text-decoration: none;
+		}
+	}
+
+	// name and folder
+	#selector-wizard {
+		padding:12px;
+		background:$lightGrey;
+		.quick-wrap {
+			@include susy-clearfix;
+			&.wiz-name {
+				margin-bottom:12px;
+			}
+		}
+		label,
+		.input-wrap {
+			float: left;
+			display: inline-block;
+		}
+		input.combobox {
+			margin-right: 0;
+		}
+		label {
+			line-height: 26px;
+			font-weight: bold;
+			width:pc(50);
+		}
+		.input-wrap {
+			width:pc(275);
+			@include box-sizing();
+			padding-right:26px;
+			position: relative;
+		}
+		input {
+			width:100%;
+			min-width: 100%;
+			border-color:$mediumGrey;
+		}
+		.combo-arrow {
+			position: absolute;
+			border-color:$mediumGrey;
+			right:0;
+		}
+		// firebug style inspector
+		.inspector {
+			display: none;
+			background: $lightGrey;
+			border-top:1px solid $white;
+		}
+	}
+
+	.wizard-panes {
+		.scrollable-refined {
+			position:relative;
+			max-height: 100%;
+			overflow: hidden;
+		}
+	}
+
+	.create-sel-wrap {
+		height:40px;
+		text-align: right;
+		background: $lightGrey;
+		.wizard-add {
+			margin:7px;
+		}
+	}
+}
+#adv-tabs {
+	padding:0 0 0 12px;
+	background: $lightGrey;
+	width:100%;
+	border-bottom:1px solid $mediumGrey;
+}
+.adv-area-refine-targeting,
+.adv-area-html-inspector {
+	padding:12px;
+	@include box-sizing();
+	height: 100%;
+	max-height: 100%;
+
+}
+
+// Refine targeting slider
+.refine-inner-wrap {
+	padding:3px 0;
+}
+$sliderHeight: 26px;
+
+#code-suggestions {
+	.selector-category {
+		display: none;
+	}
+	textarea {
+		width: 100%;
+		background: transparent;
+		border-color: $lightestGrey;
+		resize: none;
+		display: block;
+		height: 26px;
+		padding: 3px;
+		line-height: 18px;
+	}
+	li.in-focus {
+		textarea {
+			background: $white;
+			border-color: $lightGrey;
+			resize: vertical;
+			&:hover {
+				cursor: text;
+			}
+		}
+
+	}
+
+	margin: 0;
+	li {
+		margin-bottom: 0;
+		padding-right:25px;
+		position: relative;
+		.info-icon {
+			display: none;
+		}
+	}
+	li:hover {
+		textarea {
+			background: $lightGrey;
+			cursor: pointer;
+		}
+		.info-icon {
+			display: inline-block;
+			position: absolute;
+			top:0;
+			right:0;
+			margin:3px 0;
+		}
+		&.in-focus {
+			textarea {
+				cursor: text;
+				background: $white;
+			}
+		}
+	}
+}
+
+// HTML inspector controls
+.refine-target-controls {
+	overflow:hidden;
+	margin:0 auto 12px auto;
+	width:50px;
+
+	span {
+		float:left;
+		cursor: pointer;
+		display: block;
+		height: 18px;
+		width: 18px;
+		margin-top:9px;
+	}
+	.updown-wrap {
+		overflow:hidden;
+		width:18px;
+		float:left;
+		margin:0 -2px;
+		span {
+			margin-top:0;
+		}
+	}
+	// prev sibling
+	span.tvr-prev-sibling {
+		@include state-sprite(17.3, 4.28);
+		&.disabled {
+			opacity: .3;
+			&:hover {
+				@include sprite(17.3, 4.28);
+			}
+		}
+	}
+	// next sibling
+	span.tvr-next-sibling {
+		@include state-sprite(18.3, 4.28);
+		&.disabled {
+			opacity: .3;
+			&:hover {
+				@include sprite(18.3, 4.28);
+			}
+		}
+	}
+	// parent
+	span.tvr-parent {
+		margin-bottom:2px;
+		@include state-sprite(19.3, 4.28);
+		&.disabled {
+			opacity: .3;
+			&:hover {
+				@include sprite(19.3, 4.28);
+			}
+		}
+	}
+	// child
+	span.tvr-child {
+		@include state-sprite(20.3, 4.28);
+		&.disabled {
+			opacity: .3;
+			&:hover {
+				@include sprite(20.3, 4.28);
+			}
+		}
+	}
+}
+
+.refine-target-html {
+	padding:8px;
+	background: $nearlyWhite;
+	border:1px solid $lightGrey;
+	margin-bottom: 1em;
+	min-height: 17px;
+}
+
+.accordion-menu {
+  margin:0;
+  li {
+	overflow:hidden;
+	&.css-group-heading {
+	  font-weight: bold;
+	  text-transform: uppercase;
+	  margin-bottom:0;
+	  .menu-arrow {
+		padding:3px 0;
+	  }
+	  .text-for-group {
+		padding:3px 0;
+	  }
+	}
+	&.property-item {
+	  padding:3px 6px;
+	  margin:0;
+	  &.row-odd {
+		background:$nearlyWhite;
+	  }
+	  &.last-row {
+		margin-bottom: 1em;
+	  }
+
+	  &:hover {
+		background: $lightGrey;
+	  }
+	  &.bottom-gap:hover {
+		background: transparent;
+	  }
+
+	}
+	span {
+	  float:left;
+	}
+  }
+}
+
+
+// Computed CSS accordion
+#html-computed-css {
+	.scrollable-area {
+		padding:0;
+	}
+
+	.comp-prop-label {
+		min-width: 115px;
+	}
+	#comp-background {
+		.comp-prop-label {
+			min-width: 150px;
+		}
+	}
+	#comp-border {
+		.comp-prop-label {
+			min-width: 170px;
+		}
+	}
+	.comp-prop-value {
+		font-weight: bold;
+
+	}
+}
+
+
+
+
+/*--------------------------------------------------------------
+The custom code editor(s)
+--------------------------------------------------------------*/
+.group-tag-code {
+  min-height:48px; // the line-height for ACE is 16
+  margin-top:-1px !important;
+}
+.tvr-editor-area {
+  padding:0 0 0 8px;
+  background: $white;
+  .dark-editor & {
+	background: $darkEditor;
+  }
+  .css-code-wrap {
+	position: relative;
+	margin:0 0 0 0;
+	padding:0 8px 8px 0;
+	resize: vertical;
+	//overflow:hidden; // so resize handle bars appear (add this back after rejigging code_save_button() sysytem)
+  }
+  .save-button {
+	position: absolute;
+	top:30px;
+	left:-29px;
+  }
+  // custom code
+  &#code-editors-wrap {
+	padding-left:0;
+
+	.tvr-inner-code {
+	  padding:8px 0 0 8px;
+	  position:relative;
+	}
+	.css-code-wrap {
+	  margin-left:40px;
+	}
+	.save-button {
+	  position: absolute;
+	  top:0px;
+	  left:-33px;
+
+	}
+  }
+  pre {
+	margin:0;
+	position: absolute;
+	top: 0;
+	bottom: 8px;
+	left: 0;
+	right: 8px;
+	line-height: 16px;
+  }
+  textarea {
+	&.hand-css-textarea,
+	&.property-input {
+	  display: none !important;
+	}
+  }
+}
+#tvr {
+  .tvr-disable {
+	text-transform: uppercase;
+	font-style: italic;
+	opacity:.5;
+	position: absolute; // this is necessary for the correct line number bizzarely
+  }
+  .ace-merbivore {
+	background: transparent;
+	.tvr-disable {
+	  background: $darkEditor;
+	}
+  }
+  .ace-chrome {
+	background: transparent;
+	.ace_marker-layer .ace_active-line {
+	  background: $lightestGrey;
+	}
+	.ace_gutter-layer {
+	  background: $lightGrey;
+	}
+	.ace_gutter-active-line {
+	  background: $shadowColor;
+	}
+	.tvr-disable {
+	  background: $white;
+	}
+  }
+  .generated-css {
+	&.min {
+	  height:100%;
+	  /*.ace_line,
+	  .ace_layer,
+	  .ace_content,
+	  .ace_scroller {
+		white-space: normal;
+	  }
+	  .ace-content {
+		max-width: 100%;
+		min-height: 100%;
+	  }*/
+	}
+	&.ace-merbivore {
+	  .ace_marker-layer .ace_active-line {
+		background: $darkRed;
+	  }
+	}
+	&.ace-chrome {
+	  .ace_marker-layer .ace_active-line {
+		background: $red;
+		opacity: .5;
+	  }
+	}
+  }
+}
+
+
+
+#hand-css-area {
+	display: none;
+	.show_code_editor & {
+		display: block;
+	}
+	#custom-code-toolbar {
+		min-height: 40px;
+		line-height:40px;
+		margin-left:50px;
+		.heading {
+			margin-bottom:0;
+		}
+	}
+	// code editors
+	#code-editors-wrap {
+		.query-tabs {
+			padding-left:45px;
+		}
+	}
+}
+iframe {
+  //display: none;
+}
+
+
+
+
+
+/*--------------------------------------------------------------
+The editing options
+--------------------------------------------------------------*/
+.pg-icon-code {
+  @include state-sprite-pg(7, 1); // sprite needs updating for hasValues (feather) same as other pg icons
+}
+.pg-icon-font {
+  @include state-sprite-pg(1, 1);
+}
+.pg-icon-text {
+  @include state-sprite-pg(2, 1);
+}
+.pg-icon-list {
+  @include state-sprite-pg(29, 1);
+}
+.pg-icon-shadow {
+  @include state-sprite-pg(3, 1);
+}
+.pg-icon-background {
+  @include state-sprite-pg(4, 1);
+}
+.pg-icon-dimensions {
+  @include state-sprite-pg(5, 1);
+}
+.pg-icon-padding_margin {
+  @include state-sprite-pg(11, 1);
+}
+.pg-icon-border {
+  @include state-sprite-pg(6, 1);
+}
+.pg-icon-behaviour {
+  @include state-sprite-pg(9, 1);
+}
+.pg-icon-position {
+  @include state-sprite-pg(10, 1);
+}
+.pg-icon-gradient {
+  @include state-sprite-pg(27, 1);
+}
+
+#tvr-options {
+	padding:72px 0 0 0;
+	margin:0;
+	background: $lightestGrey;
+	.show_code_editor & {
+		display: none;
+	}
+	ul, li {
+		margin:0;
+		padding:0;
+	}
+	li.selector-tag {
+		display: none;
+		&.in-focus {
+			display: block;
+		}
+	}
+
+	/*--------------------------------------------------------------
+	Style Group Icons
+	--------------------------------------------------------------*/
+	.styling-option-icons {
+		overflow: hidden;
+		//@include grey-shadow();
+		border-bottom: 1px solid $mediumGrey;
+		li {
+			cursor: pointer;
+			float:left;
+			width:30px;
+			padding:5px;
+			height:30px;
+			background-clip:content-box;
+		}
+	}
+	.style-config {
+		display: none;
+	}
+	.styling-options {
+		clear:left;
+		//max-height:160px;
+		border-top:1px solid $white;
+	}
+
+
+	/*--------------------------------------------------------------
+	Property Fields
+	--------------------------------------------------------------*/
+	.property-fields {
+		@include susy-clearfix;
+		position: relative;
+		padding-left:10px;
+		.field-wrap {
+		  display:inline-block;
+		  position:relative;
+		  width:auto;
+		  float:left;
+		  margin:0 0 0 20px;
+		  max-height:40px; // for google font field in chrome
+		  @include susy-clearfix;
+		  &.hidden {
+			display: none;
+		  }
+		  &.always-label .text-label {
+			display: inline-block;
+		  }
+		}
+		.sub-label {
+		  font-weight: bold;
+		  text-transform: uppercase;
+		  margin: 9px 0 0 25px;
+		  cursor: pointer;
+		  &:first-child {
+			margin-left:0;
+		  }
+		  .quick-opts-wrap {
+			float: left;
+			line-height: 22px;
+			@include hover-fade-in('.quick-opts', .15s, .5s, top, 100%);
+		  }
+		  .quick-opts {
+			//top:100%;
+		  }
+		}
+		.chained-icon {
+		  float: right;
+		}
+
+		label {
+		  float:left;
+		  display: inline-block;
+		  &.quick-opts-wrap {
+			@include hover-fade-in('.quick-opts', .15s, .5s, top, 75%);
+		  }
+		  span {
+			float:left;
+			display: inline-block;
+		  }
+		  .quick-opts {
+			//top:75%;
+			padding-top:10px;
+			.quick-opts-inner {
+			  padding:7px 10px;
+			}
+			span {
+			  float:none;
+			  display: block;
+			  &.option-label,
+			  &.option-value {
+				display: inline;
+			  }
+			  &.option-label {
+				text-decoration: none;
+			  }
+			  &.option-value {
+				font-weight:bold;
+				&::before {
+				  content: ': ';
+				}
+			  }
+			}
+		  }
+		}
+
+		&.show {
+			display:block;
+		}
+	  	&.property-code {
+		  padding:0;
+		  //background: $lightGrey;
+		  .subgroup-tag {
+			margin:0;
+			position: absolute;
+			left:0;
+			top:0;
+			.scss-icon,
+			.css-icon {
+			  margin-left:11px;
+			}
+		  }
+		  .quick-opts {
+			min-width:30px;
+			max-width:30px;
+			left:5px;
+		  }
+		  .quick-opts-inner {
+			min-width:0;
+			height:67px;
+			padding:6px;
+			.tvr-icon {
+			  float:none;
+			  display: block;
+			  margin:0 0 8px 0;
+			}
+		  }
+		  .sel-code-alias {
+			float:left;
+			font-family: $codeFont2;
+			font-size:14px;
+			line-height: 26px;
+			padding:7px 0;
+		  }
+		  .sub-label {
+			margin-top:10px;
+		  }
+		  .property-tag {
+			clear:both;
+			float:none;
+			display: block;
+			padding-left:40px;
+			padding-top: 8px;
+			margin-left:0;
+			max-height: 100%;
+		  }
+		  .css-code-wrap {
+			//margin-top:8px;
+		  }
+		  .subgroup-label {
+			text-indent:-9999px;
+		  }
+		  .o-icon-wrap,
+		  .option-label {
+			display: none;
+		  }
+		}
+		&.property-border {
+			//padding-left:145px;
+			.field-wrap {
+				min-width: 138px; // so color fields line up
+			  	margin-left:0;
+			}
+		  	.sub-label {
+			  min-width:119px;
+			  margin-right:15px;
+			}
+
+			input.property-input {
+				max-width:86px;
+				min-width:86px;
+				&.sp-input-opacity {
+					min-width:60px;
+				}
+			}
+		  	input.has-arrows {
+				max-width:60px;
+				min-width:60px;
+			}
+		}
+		&.property-behaviour {
+			//padding-left:123px;
+		}
+		&.property-position {
+			//padding-left:112px;
+		}
+		&.property-gradient {
+			//padding-left:117px;
+		}
+
+
+	  	.comp-mixed-wrap {
+		  display: none;
+		  height:155px;
+		  overflow: auto;
+		  overflow-x: hidden;
+		  margin-top:7px;
+		}
+		.comp-mixed-table {
+		  border-collapse: collapse;
+		  background: transparent;
+		  margin:10px 0 0 0;
+		  //padding-top: 10px;
+		  td,
+		  th {
+			padding:3px 6px;
+		  }
+		  tr:hover {
+			background: $lightGrey;
+			cursor: default;
+		  }
+		}
+	  	.mixed-cp {
+		  .quick-opts {
+			//width:210px;
+		  }
+		  .comp-mixed-wrap {
+			display: inline;
+		  }
+		}
+		.text-label {
+			display: none;
+			&.show-labels {
+				display: inline-block;
+			}
+			vertical-align: middle;
+			margin-right:6px;
+			line-height: 40px;
+		}
+	  	.field-behaviour-content {
+		  .text-label {
+			display: inline-block;
+			padding-left:8px;
+			color:$mediumBlue;
+		  }
+		}
+		.input-wrap {
+			position:relative;
+			display: inline-block;
+			font-family: $codeFont;
+			margin-top:7px;
+			float:left;
+		}
+		input {
+			width:60px;
+			min-width:60px;
+			max-width:220px;
+			//transition: width 0.25s;
+			font-weight: normal;
+			float:left;
+			font-family: inherit;
+			&.size-0c {
+				width:30px;
+				min-width:30px;
+			}
+			&.size-0b {
+				width:45px; // needs to accomodate [mix]
+				min-width:45px;
+			}
+			&.size-0 {
+				width:50px; /* the size for number values not more than 999px */
+				min-width:50px;
+			}
+			&.size-1 {
+				width:55px; /* the size for number values */
+				min-width:55px;
+			}
+			&.size-2 {
+				width:60px; /*** the default size ***/
+				min-width:60px;
+			}
+			&.size-3 {
+				width:70px;
+				min-width:70px;
+			}
+			&.size-3a {
+				width:75px; /* the size for slightly larger dropdowns */
+				min-width:75px;
+			}
+			&.size-4 {
+				width:80px;
+				min-width:80px;
+			}
+			&.size-4a {
+				width:85px;
+				min-width:85px;
+			}
+			&.size-5 {
+				width:90px;
+				min-width:90px;
+			}
+			&.size-5a {
+				width:95px;
+				min-width:95px;
+			}
+			&.size-6 {
+				width:100px;
+				min-width:100px;
+			}
+			&.size-9a {
+				width:135px;
+				min-width:135px;
+			}
+			&.size-big {
+				width:160px;
+				min-width:160px;
+			}
+			&.size-very-big {
+				//width:220px;
+				min-width:220px;
+			}
+			/* outliers */
+			&.color {
+				min-width:80px;
+			}
+		}
+		.g-font,
+		.tvr-image-upload {
+			margin-left:4px;
+			width:26px;
+			height:26px;
+			@include sprite(48.18, 11.175);
+			@include border-radius(3px);
+			background-color:$green;
+			&:hover {
+				background-color:$darkGreen;
+			}
+		}
+		.img_display {
+			//padding-right:26px;
+		}
+		.clear-bg-image {
+			display: none; // we just let the user change by setting empty value
+			position: absolute;
+			top:3px;
+			right:31px;
+		}
+		.tvr-image-upload {
+			@include sprite(46.18, 11.175);
+		}
+		.important-toggle,
+		.imp-placeholder {
+			display: none;
+			cursor: pointer;
+			float: left;
+			font-family: Georgia,"Times New Roman",Times,serif;
+			margin:0 4px;
+			line-height:40px;
+			color:$lightGrey;
+			font-weight: bold;
+			width:4px;
+			&.active {
+				color:$red;
+			}
+		}
+		.imp-placeholder {
+			visibility: hidden !important;
+		}
+
+		/*--------------------------------------------------------------
+		Computed Values
+		--------------------------------------------------------------*/
+
+		.manual-val input,
+		.manual-val .combo-arrow,
+		.input-wrap:hover input,
+		.input-wrap:hover .combo-arrow {
+			//background-color:$white;
+			font-weight: bold;
+			border-color:$mediumGrey;
+			color:#000;
+		}
+		span.comp-style {
+			position:absolute;
+			top:7px;
+			left:7px;
+			color:$mediumGreyb;
+			line-height: 1;
+			font-family: inherit;
+		}
+		span.comp-style.hidden {
+			visibility: hidden;
+		}
+		.is-picker span.comp-style {
+			text-indent: -9999px;
+			width:26px;
+			height:8px;
+			top:none;
+			top:19px;
+			left:0;
+			border:1px solid $lightGrey;
+			@include box-sizing();
+			@include border-radius-separate(0, 0, 3px, 3px);
+			//@include grey-shadow();
+			background-image: url(../images/trans.png);
+			span {
+				width:100%;
+				height:100%;
+				display: block;
+				@include border-radius-separate(0, 0, 3px, 3px);
+			}
+
+		}
+	}
+
+}
+
+// show important toggles if user wants to this manually
+.manual-css-important {
+	.important-toggle,
+	.imp-placeholder {
+		display: inline-block !important;
+	}
+}
+
+
+/*--------------------------------------------------------------
+Manage Packs Header
+--------------------------------------------------------------*/
+ul.pack-manage-options{
+	overflow: hidden;
+	background: $white;
+	border-bottom:1px solid $mediumGrey;
+	padding:.5em 1em;
+	margin-top:0;
+	li {
+		float:right;
+		margin-bottom: 0;
+		margin-left:8px;
+		&.upload {
+			float:left;
+			margin-left:0;
+		}
+	}
+	.tvr-button {
+		border-color: $darkGreen !important;
+	}
+}
+.tvr-manage-single {
+	.pack-manage-options {
+		margin-bottom: 0;
+	}
+}
+
+
+/*--------------------------------------------------------------
+Manage Packs Page (multiple/single common styling)
+--------------------------------------------------------------*/
+
+.title-text {
+	display: block;
+	font-size:16px;
+	font-weight: bold;
+	line-height:1.5;
+	color:$darkGreen !important;
+	text-decoration: none;
+	.version {
+		color:$mediumGrey !important;
+	}
+}
+.author-name {
+	font-style:italic;
+	a {
+		text-decoration: none;
+	}
+}
+
+
+/*--------------------------------------------------------------
+Manage Packs Page (multiple)
+--------------------------------------------------------------*/
+
+// design packs pagination
+.tvr-pagination {
+	margin:0 1em .5em 1em;
+	overflow:hidden;
+	li {
+		float:right;
+		text-align: center;
+		width: 25px;
+		margin: 0 0 5px 5px;
+		line-height: 25px !important;
+		&.displaying-x {
+			width: auto;
+			display: inline-block;
+			margin-right:.5em;
+		}
+		&.page-item {
+			a, span {
+				display: block;
+				border: 1px solid $lightGrey;
+				font-weight:bold;
+			}
+			a {
+				background:$white;
+				text-decoration: none;
+				color:$darkBlue;
+				&:hover {
+					background:$darkBlue;
+					color:white;
+				}
+			}
+		}
+		&.last-modified {
+			float:left;
+			width: auto;
+			display: inline-block;
+		}
+	}
+}
+
+// design packs grid
+#all-packs {
+	clear:both;
+	padding:0 .5em;
+	overflow:hidden;
+	margin:0;
+	li {
+		@include box-sizing();
+		padding:0 .5em .5em .5em;
+		min-height: 91px;
+		float:left;
+		width:50%;
+		#loading-gif-active {
+			float:right;
+			display: block;
+			margin-left:2px;
+			margin-right:0;
+		}
+	}
+	.pack {
+		border:1px solid $lightGrey;
+		background:$white;
+		padding:3px;
+		@include border-radius(3px);
+		overflow:hidden;
+	}
+	img {
+		float:left;
+		display: block;
+		margin-right:1em;
+	}
+	.pack-quick-icons {
+		float:right;
+		width:150px;
+		padding:.5em;
+		overflow:hidden;
+		span {
+			float:right;
+			margin-left:8px;
+			&.quick-import {
+				@include sprite(14.28, 1.28);
+			}
+		}
+
+	}
+
+}
+
+
+/*--------------------------------------------------------------
+Manage Packs Page (single)
+--------------------------------------------------------------*/
+#tvr-manage-single {
+	padding:1em;
+	#loading-gif-active {
+		 float:left;
+		 margin-right:8px;
+		 margin-left:-4px;
+	 }
+}
+#pack-summary {
+	@include border-radius(3px);
+	border:1px solid $mediumGrey;
+	background: $white;
+	padding:1em;
+	position:relative;
+	min-height:300px;
+	#micro-screenshot {
+		position: absolute;
+		top:1em;
+		left:1em;
+		background: url(../images/screenshot-placeholder.gif);
+		width:524px;
+		height:300px;
+		img {
+			max-width:100%;
+			display:block;
+			cursor:pointer;
+		}
+	}
+	.summary-text {
+		margin-left:548px;
+		position:relative;
+		min-height:260px;
+		padding-bottom:40px;
+	}
+
+	p.attach-summary {
+		overflow: hidden;
+		padding-top:.4em;
+	}
+	.attachment-icon {
+		@include sprite(2.3, 7.28);
+
+	}
+	.attachment-icon,
+	.attachment-count {
+		margin-right:8px;
+		display: inline-block;
+		float:left;
+	}
+	.heading {
+		margin-bottom:0;
+		clear:left;
+	}
+	#main-theme-actions {
+		position: absolute;
+		bottom:0;
+		margin:0;
+		li {
+			display:block;
+			float:left;
+			margin:0 8px 0 0;
+			padding:3px 6px;
+			border:1px solid $mediumGrey;
+			background:$lightGrey;
+			width: auto;
+			cursor: pointer;
+			@include border-radius(3px);
+			&.on,
+			&:hover {
+				border:1px solid $mediumBlue;
+				background:$mediumBlue;
+				color:$white;
+			}
+		}
+		.icon {
+			float:left;
+			margin-right:2px;
+		}
+		.pack-action-info {
+			.icon {
+				@include sprite(1.3, 7.28);
+			}
+			&.on,
+			&:hover {
+				.icon {
+					@include sprite(1.3, 10.28);
+				}
+			}
+		}
+		.pack-action-instructions {
+			.icon {
+				@include sprite(1.3, 7.28)
+			}
+			&.on,
+			&:hover {
+				.icon {
+					@include sprite(1.3, 10.28);
+				}
+			}
+		}
+		.pack-action-attachments {
+			.icon {
+				@include sprite(2.3, 7.28)
+			}
+			&.on,
+			&:hover {
+				.icon {
+					@include sprite(2.3, 10.28);
+				}
+			}
+		}
+		.pack-action-download {
+			.icon {
+				width:22px;
+				margin-right:3px;
+				@include sprite(3.28, 7.28)
+			}
+			&.on,
+			&:hover {
+				.icon {
+					@include sprite(3.28, 10.28);
+				}
+			}
+		}
+		.pack-action-delete {
+			.icon {
+				@include sprite(4.3, 7.28)
+			}
+			&.on,
+			&:hover {
+				.icon {
+					@include sprite(4.3, 10.28);
+				}
+			}
+		}
+		.action-text {
+			float:left;
+			display: inline-block;
+			text-transform: uppercase;
+		}
+	}
+}
+
+#single-content-areas {
+	position:relative;
+	.explain {
+		position: absolute;
+		top:0;
+		left:0;
+		width:504px;
+	}
+	.manage-content-wrap {
+		margin:2em 0 0 562px;
+		min-height: 305px; // the height of the explain text
+		.float-form {
+			padding: 0;
+			textarea {
+				width:100%;
+			}
+			p {
+				label {
+					width:20%
+				}
+				input[type="text"], textarea {
+					@include box-sizing();
+					width:75%;
+					background:$white;
+
+				}
+				textarea {
+					min-height:100px;
+				}
+			}
+			input[type="submit"]{
+				width:auto;
+			}
+
+		}
+	}
+
+}
+#edit-info {
+	label {
+		cursor: help;
+	}
+	p.combobox-wrap {
+		@include susy-clearfix;
+	}
+	input.combobox {
+		width:200px !important;
+	}
+}
+
+#edit-attachments {
+	#upload-file-form {
+		display: block;
+		float:right;
+		width:75%;
+		text-align:right;
+	}
+	.design-packs-table-heading {
+		line-height:31px;
+	}
+	.file-types {
+		overflow: hidden;
+		img {
+			display:block;
+			float:left;
+			margin-right:8px;
+		}
+	}
+	.library-heading {
+		padding-top:1em;
+		padding-bottom:.5em;
+	}
+	.file-name {
+		color:$lighterBlue;
+		font-weight: bold;
+		span {
+			color:$darkBlue;
+
+		}
+	}
+
+}
+.dialog-header {
+	#loading-gif-active {
+		float:left;
+	}
+}
+
+
+#pack-file-content,
+#pack-file-content-active {
+	box-sizing: border-box;
+	width:100%;
+	height:95%;
+}
+
+
+#edit-instructions {
+	textarea {
+		min-height:500px !important;
+		background:$white;
+	}
+	p.button-wrap {
+		padding-top:1em;
+	}
+}
+
+
+/*--------------------------------------------------------------
+Ruler
+--------------------------------------------------------------*/
+.ruler {
+	background: transparent;
+	color: $rulerNumbers;
+	//font-family: source code pro, "Arial Narrow", "Helvetica Neue", Helvetica, Arial, Veranda, sans-serif;
+	font-size: 9px;
+	line-height: 14px;
+	overflow: hidden;
+}
+.ruler-stuff {
+	display: none;
+	.show_rulers & {
+		display: block;
+	}
+}
+.ruler > div {
+	background: $rulerGrooves;
+}
+.hRule {
+	background: transparent;
+	position: absolute;
+	width: 100%;
+	height: 18px;
+	left: 0px;
+	top: 0px;
+	padding-bottom: 1px;
+	@include grey-shadow();
+	z-index: 9;
+}
+.vRule {
+	position: absolute;
+	min-height: 100%;
+	width: 18px;
+	left: 0px;
+	top: 0px;
+	border-right: 1px solid $lightBlue;
+	z-index: 9;
+}
+.corner {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 18px;
+	height: 18px;
+	border-right: 1px solid $rulerGrooves;
+	border-bottom: 1px solid transparent;
+	z-index: 10;
+	cursor: help;
+  	@include sprite(20.27, 3.27);
+  	opacity: .5;
+	&.warn {
+	  opacity: 1;
+		@include sprite(46.28, 1.27);
+	}
+	.show_code_editor & {
+		background: none;
+	}
+}
+.hRule .tickLabel {
+	position: absolute;
+	bottom: 1px;
+	width: 1px;
+	height: 100%;
+	text-indent: 3px;
+}
+.hRule .tickMajor {
+	position: absolute;
+	bottom: 1px;
+	width: 1px;
+	height: 6px;
+}
+.hRule .tickMinor {
+	position: absolute;
+	bottom: 1px;
+	width: 1px;
+	height: 4px;
+}
+.vRule .tickLabel {
+	position: absolute;
+	right: 0px;
+	height: 1px;
+	width: 100%;
+	text-indent: 1px;
+}
+.vRule .tickLabel span {
+	display: block;
+	position: absolute;
+
+	top: 3px;
+	right: 0px;
+	margin-right: 18px;
+
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+
+	-webkit-transform-origin: top right;
+	-moz-transform-origin: top right;
+	-ms-transform-origin: top right;
+	-o-transform-origin: top right;
+	transform-origin: top right;
+
+}
+.vRule .tickMajor {
+	position: absolute;
+	right: 0px;
+	height: 1px;
+	width: 6px;
+}
+.vRule .tickMinor {
+	position: absolute;
+	right: 0px;
+	height: 1px;
+	width: 4px;
+}
+
+.vMouse {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 0px;
+	left: 0;
+	background: rgba(0,0,0,0);
+	border-bottom: 1px dotted;
+	z-index: 11;
+}
+.hMouse {
+	display: block;
+	position: absolute;
+	height: 100%;
+	width: 0px;
+	top: 0;
+
+	background: rgba(0,0,0,0);
+	border-left: 1px dotted;
+	z-index: 11;
+}
+.mousePosBox {
+	height: 16px;
+	background: rgba(0,0,0,0.25);
+	color: #fff;
+	font-family: source code pro;
+	font-size: 12px;
+	line-height: 16px;
+	border: 1px solid rgba(0,0,0,0.5);
+	position: absolute;
+	white-space: no-wrap;
+	display: block;
+	overflow-y:hidden;
+	float: left;
+	text-align: left;
+	left: -50%;
+	top: -50%;
+	padding: 0 2px;
+}
+
+/*--------------------------------------------------------------
+// Overwrite Spectrum color picker style
+// https://github.com/bgrins/spectrum/blob/master/spectrum.css
+--------------------------------------------------------------*/
+#tvr #tvr-options {
+
+	// borders
+	.sp-preview,
+	.sp-input,
+	.sp-alpha-inner,
+	.sp-alpha-handle,
+	.sp-slider {
+		@include border-radius(3px);
+		border:1px solid $mediumGrey;
+		&:hover {
+			border:1px solid $mediumGrey;
+		}
+	}
+
+	// custom clear representation
+	.sp-clear-display {
+		@include sprite(47.2, 1.2);
+	}
+
+	// the inline preview
+	.sp-replacer {
+		border: none;
+		padding: 0;
+		background: none;
+	}
+	.sp-preview {
+		width: 26px;
+		height: 26px;
+		@include box-sizing();
+		margin: 0;
+		border:1px solid $lightGrey;
+	}
+	.sp-preview-inner {
+		@include border-radius(3px);
+
+	}
+
+	.sp-dd {
+		display: none;
+	}
+
+	// the popup color picker
+	.sp-container {
+		z-index: 999000;
+		color: $darkBlue;
+		background-color: $lightestGrey;
+		border: 1px solid $white;
+		border:0;
+		//@include box-shadow(0, 3px, 12px, rgba(0,0,0, 0.4));
+		@include grey-shadow();
+	}
+	.sp-wrap {
+		position: relative;
+		width: 420px;
+		height: 210px;
+	}
+
+	.sp-color {
+		border:none;
+		// 134x145
+		width:190px;
+		height:190px;
+	}
+
+	.sp-top-inner .sp-clear {
+		float:right;
+		width:18px;
+		height:18px;
+		display: inline-block;
+		left:383px;
+		border:0;
+		cursor:pointer;
+		@include sprite(4.3, 7.28);
+		&:hover {
+			@include sprite(4.3, 8.28);
+		}
+	}
+
+	.sp-hue {
+		border:none;
+		top:0;
+		left:200px;
+		width:20px;
+		height:190px;
+
+	}
+
+	.sp-top {
+		height:190px;
+		margin-bottom:0;
+	}
+	.sp-alpha {
+		width:95px;
+		top:-87px;
+		left:300px;
+		z-index:9;
+	}
+	.sp-alpha-handle {
+		background: $white;
+		opacity: 1;
+	}
+
+	// custom mt color inputs
+	.sp-mt-inputs {
+		position: absolute;
+		left: 240px;
+		top:65px;
+		z-index:8;
+	}
+	.sp-input {
+		//position: absolute;
+		//right: 0;
+		margin:0 10px 10px 0;
+		width: 170px;
+		font-family: $appFont;
+		font-weight: bold;
+		border:1px solid $lightGrey;
+	}
+	.sp-input-hex {
+		//top: 60px;
+		//right: 70px;
+	}
+	.sp-input-opacity {
+		//top: 60px;
+		width: 60px;
+	}
+	.sp-input-rgb {
+		//top: 90px;
+	}
+	.sp-input-hsl {
+		//top: 120px;
+	}
+
+	.sp-picker-container,
+	.sp-palette-container {
+		position: initial;
+		//padding: 10px;
+		padding:0;
+		margin: 10px;
+		width:190px;
+		height: 190px;
+	}
+
+	.sp-picker-container {
+
+	}
+	.sp-color {
+
+	}
+	.sp-dragger {
+		background: none;
+		height: 6px;
+		width: 6px;
+		//border-style: inset;
+		@include grey-shadow();
+	}
+
+	.sp-button-container {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+
+	.sp-initial {
+		position: absolute;
+		top: 10px;
+		left: 240px;
+		border:0;
+
+		span {
+			width: 25px;
+			height: 25px;
+		}
+
+		.sp-thumb-el,
+		.sp-clear-display {
+			cursor: pointer;
+			position: absolute;
+			top: 15px;
+			left: 15px;
+			z-index:5;
+			border:1px solid $lightestGrey;
+			@include grey-shadow();
+			&:first-child + span {
+				top: 0;
+				left: 0;
+				z-index:6;
+			}
+		}
+	}
+
+}
+
+
+
+// COMPLETELY HIDE INTERFACE
+#common-devices-preview,
+#v-top-controls,
+.show_rulers .ruler-stuff,
+.show-advanced #advanced-wizard,
+#v-left-controls-wrap {
+	display: none;
+}
+.show_interface {
+	&.show_rulers .ruler-stuff,
+	&.show-advanced #advanced-wizard,
+	#v-top-controls,
+	#common-devices-preview,
+	#v-left-controls-wrap {
+		display: block;
+	}
+	// exceptions
+	&.show_rulers .ruler-stuff.hidden {
+		display: none;
+	}
+}
+
+/*
+.not-active, .botao-telefone {
+  pointer-events: none;
+  cursor: default;
+}
+@media screen and (max-width: 768px) {
+  .botao-telefone {
+	pointer-events: auto;
+	cursor: pointer;
+  }
+}
+@media screen and (max-width: 599px) {
+  div.fl-post-carousel-text {
+	padding: 10px 5px 10px 5px !important;
+  }
+  div.fl-module-post-carousel,
+  div.fl-post-carousel-post {
+	border: none !important;
+	width: 100% !important;
+	height: 100% !important;
+  }
+}
+*/
+
+/*--------------------------------------------------------------
+DOCS
+--------------------------------------------------------------*/
+#tvr-docs {
+  font-family: $appFont;
+  a, input {
+	&:focus{
+	  outline:0;
+	  box-shadow: none;
+	}
+  }
+  // styles for lining up option-icons
+  @include line-up-prop-icons();
+}
+#docs-container {
+  margin-right:-100%;
+  float: left;
+  width:100%;
+}
+#docs-content {
+  margin-left:320px;
+  font-size: 19px;
+  padding:15px;
+  h3 {
+	font-weight:bold;
+	line-height:1.3;
+  }
+  p {
+	font-size: 19px;
+  }
+  table.prop-vals {
+	margin:2em 0;
+	border:1px solid $lightGrey;
+	th {
+
+	}
+	td, th {
+	  padding:15px;
+	  line-height: 1.5;
+	  border-bottom:1px solid $lightGrey;
+	}
+	.value {
+	  white-space: nowrap;
+	}
+  }
+  .docs-box {
+	box-sizing: border-box;
+	float:left;
+	width:30%;
+	li {
+	  font-size: 14px;
+	}
+  }
+  .ref-details {
+	h3.main-title {
+	  overflow:hidden;
+	  span {
+		float:left;
+		margin:0 6px 0 0;
+		line-height: 40px;
+	  }
+	  .option-icon {
+
+	  }
+	}
+	width:63%;
+  	padding-left:0;
+  }
+  #tutorials-refs {
+	margin-left:7%;
+	h3 {
+	  font-size:19px;
+	  margin-top:35px;
+	}
+	li {
+	  list-style: disc;
+	  margin-left:20px;
+	  margin-bottom:0;
+	  list-style-position: outside;
+	  line-height: 28px;
+	}
+	a {
+	  text-decoration: none;
+	}
+  }
+  // video
+  iframe {
+	max-width: 100%;
+  }
+}
+#docs-menu {
+  float:left;
+  width:280px;
+  padding:25px 20px 15px 20px;
+
+  ul.docs-menu {
+	margin:0;
+  }
+  li.doc-item {
+	font-size: 14px;
+	padding-bottom:10px;
+	margin:0;
+	//border-bottom:1px solid $mediumGrey;
+	a {
+	  text-decoration: none;
+	  //color:$darkBlue;
+	  font-weight: bold;
+	  text-transform: uppercase;
+	}
+  }
+  li.css-ref-side {
+	padding-top:15px;
+  }
+  li.css-group-heading,
+  li.property-item {
+	line-height: 40px;
+	font-size: 14px;
+  }
+  .pg-icon {
+	width:40px;
+	height:40px;
+	float:left;
+  }
+  .menu-arrow {
+	padding:11px 0;
+	@include sprite(5.4, 4);
+	&:hover {
+	  @include sprite(5.4, 5);
+	}
+	&.on {
+	  @include sprite(6.35, 4);
+	  &:hover {
+		@include sprite(6.35, 5);
+	  }
+	}
+  }
+  .text-for-group {
+	padding:0;
+  }
+  li.property-item {
+	padding:0;
+	margin-left:30px;
+	&:last-child {
+	  margin-bottom:.5em;
+	}
+	a {
+	  color:$darkBlue;
+	}
+	&:hover {
+
+	}
+	&.current {
+	  a {
+		font-weight: bold;
+		color:$lightBlue;
+	  }
+	}
+	a {
+	  text-transform: none;
+	  font-weight: normal;
+	  margin-left:12px;
+	}
+  }
+
+}
+
+
+/*--------------------------------------------------------------
+Google Custom Site Search
+--------------------------------------------------------------*/
+$inputHeight: px-em(62, height);
+#g-search {
+  @include susy-clearfix;
+  padding:18px 18px 15px 18px;
+  font-size:16px;
+  background: $darkBlue;
+  #external-links {
+	float:left;
+	width:280px;
+	padding:0;
+	margin:0;
+	margin-top:15px;
+	text-transform: uppercase;
+	font-weight:bold;
+	//line-height: 35px;
+	li {
+	  float:left;
+	  width:33%;
+	  text-align: center;
+	  font-size: 14px;
+	  line-height: 1.2;
+	}
+	a {
+	  color:$lightestGrey;
+	  &:hover {
+		color:$white;
+	  }
+	  text-decoration: none;
+	}
+
+  }
+  table {
+	border:0;
+	background: transparent;
+	margin-bottom: 0;
+	td {
+	  padding:0;
+	}
+  }
+  table.gsc-search-box {
+	td {
+	  vertical-align: top;
+	}
+  }
+  // search field
+  #___gcse_0 {
+	margin-left:320px;
+  }
+  .gsc-search-box {
+	font-size:1em;
+	margin:0;
+  }
+  div.gsc-input-box-hover {
+	box-shadow: none;
+  }
+  td.gsc-input {
+	padding-right:0;
+	$background:$white;
+  }
+
+  #gsc-iw-id1 {
+	height:$inputHeight;
+	padding:0 px-em(20, pad);
+	border:0;
+	border-radius: 3px 0 0 3px;
+  }
+  #gsc-iw-id1.gsc-input-box-focus {
+	border: 0;
+	box-shadow: none;
+  }
+  #gs_tti50 {
+	padding:0;
+  }
+  input.gsc-input {
+	font-size:1em;
+	min-height:$inputHeight;
+	line-height:$inputHeight;
+  }
+  td.gsc-search-button {
+	padding-left:0;
+  }
+  input.gsc-search-button {
+	@include box-sizing();
+	width:$inputHeight;
+	height:$inputHeight;
+	margin:0;
+	font-size: 1em;
+	padding: px-em(24, pad);
+	padding-top: px-em(23, pad);
+	//@include tvr-sprite(38, 15, $green);
+	border-radius:0 3px 3px 0;
+	&:focus {
+	  box-shadow: none;
+	}
+  }
+  .gsst_a {
+	padding:0;
+  }
+  span.gscb_a {
+	font-size: 1em;
+	color:$red;
+	line-height:$inputHeight;
+
+  }
+
+}
+
+#g-results {
+  .gsc-resultsbox-visible {
+	padding-bottom:px-em(24, pad);
+	margin-bottom: px-em(24, mar);
+	border-bottom: 1px solid $mediumGrey;
+	line-height: 1.5;
+  }
+  .gsc-resultsHeader {
+	display: none;
+  }
+  table {
+	background: transparent;
+	margin:0;
+	padding:0;
+	td {
+	  padding:0;
+	}
+  }
+  .gcsc-branding {
+	width:auto;
+	margin-left:auto;
+  }
+  .gsc-control-cse {
+	padding:0;
+	font-size:1em;
+	border:0;
+	// google has a clearfix which messes up float layout - override
+	&:after {
+	  //content: normal;
+	}
+  }
+  td.gcsc-branding-text {
+	width:auto;
+  }
+
+  // search results
+  .gsc-above-wrapper-area {
+	border-bottom:0;
+  }
+  .gsc-result-info {
+	padding-left:0;
+	color:$shadowColor;
+	margin-top:20px;
+  }
+  .gsc-thumbnail-inside,
+  .gsc-url-top {
+	padding:0;
+	font-size:1em;
+	font-family: $appFont;
+  }
+  .gs-title {
+	height:auto;
+	text-decoration: none;
+	font-weight: bold;
+	text-transform: uppercase;
+  }
+  a.gs-title {
+	//@include heading_3_4_5();
+	text-decoration: none;
+	b {
+	  font-size:1em;
+	  text-decoration: none;
+	}
+  }
+  .gs-visibleUrl {
+	font-size: 1em;
+  }
+  .gs-image-box {
+	padding:px-em(6, pad) px-em(4, pad) 0 0;
+  }
+  .gsc-table-result {
+	font-size: 1em;
+  }
+  .gs-snippet {
+
+	line-height: 1.5;
+	font-family: $appFont;
+  }
+  // pagination
+  .gs-bidi-start-align {
+	margin-left:0;
+  }
+  .gsc-cursor-page {
+	display: inline-block;
+	margin-right:px-em(8, mar);
+	padding:px-em(5, pad) px-em(10, pad);
+	background:$white;
+	border:1px solid $mediumGrey;
+	font-size: 1em;
+	font-weight: bold;
+	.gsc-cursor-current-page,
+	&:hover {
+	  color:$white;
+	  background: $lightBlue;
+	  text-decoration: none;
+	}
+  }
+  .gsc-cursor-current-page {
+	color:$white;
+	background: $lightBlue;
+	cursor: default;
+  }
+
+}
