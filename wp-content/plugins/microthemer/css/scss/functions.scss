@@ -1,0 +1,57 @@
+/*--------------------------------------------------------------
+Custom Functions
+--------------------------------------------------------------*/
+@function pc($px, $w: 325){ // default to 325 because that is the current width of the selector wizard
+  @return $px/$w * 100%;
+}
+@function em($px, $con: 12){
+  @return $px/$con+em;
+}
+
+@function px-em($px, $prop: false, $con: 16){
+  $all_pixels: false;
+  // everything is pixel bar defined ems
+  @if $all_pixels {
+	$em_font: false;
+	$em_spacing: false;
+	$em_dimensions: false;
+	$em_position: false;
+	$em_bg_size_pos: false;
+	$em_mq: false;
+	// return pixel if running a test
+	@if  $em_font and $prop == font or
+  	  ($em_spacing and ($prop == pad or $prop == mar)) or
+  	  ($em_dimensions and ($prop == width or $prop == height)) or
+  	  ($em_position and $prop == pos) or
+	  ($em_bg_size_pos and ($prop == bg-size or $prop == bg-pos)) or
+	   $em_mq and $prop == mq
+	{
+	  @return $px/$con+em;
+	}
+	@return $px+px;
+  }
+
+	// everything is em bar defined px
+  @else {
+	$px_font: false;
+	$px_spacing: false;
+	$px_dimensions: false;
+	$px_position: false;
+	$px_bg_size_pos: false;
+	$px_mq: false;
+	// return pixel if running a test
+	@if  $px_font and $prop == font or
+		($px_spacing and ($prop == pad or $prop == mar)) or
+		($px_dimensions and ($prop == width or $prop == height)) or
+  	  	($px_position and $prop == pos) or
+		($px_bg_size_pos and ($prop == bg-size or $prop == bg-pos)) or
+		 $px_mq and $prop == mq
+	{
+	  @return $px+px;
+	}
+	@return $px/$con+em;
+  }
+
+  //@return $px+px; // test of px
+  //@return $px/$con+em;
+}
